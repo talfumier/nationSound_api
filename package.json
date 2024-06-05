@@ -33,6 +33,7 @@
     "express": "^4.19.2",
     "joi": "^17.12.3",
     "joi-password": "^4.2.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.1",
     "mysql2": "^3.9.7",
     "node-mailjet": "^6.0.5",
