@@ -1,61 +1,37 @@
 import {Sequelize} from "sequelize";
+import mongoose from "mongoose";
 import express from "express";
-import nodeSchedule from "node-schedule";
-import {defineSqlServerModels} from "./models/sqlServerModels.js";
-import config from "./config/config.json" assert {type: "json"};
+import {defineMySqlModels} from "./models/mysqlModels.js";
 import {environment} from "./config/environment.js";
 import {routes} from "./routes/routes.js";
-import {sendReminder} from "./cron/reminder.js";
-import {generateData, initDeptRegionData} from "./models/fakeData/dataInit.js";
 
 /*DEALING MITH MYSQL*/
-const sqlServerConnection = new Sequelize(
-  config.db_name,
+const mySqlConnection = new Sequelize(
+  environment.sql_db_name,
   environment.user,
   environment.userPwd,
   {
     dialect: "mysql",
-    host: environment.db_host,
-    port: environment.db_port,
+    host: environment.sql_db_host,
+    port: environment.sql_db_port,
     logging: false,
   }
 );
 //define models
-const sqlModels = defineSqlServerModels(sqlServerConnection);
+const {Artist, Poi, Event} = defineMySqlModels(mySqlConnection); //all SQL models are defined but only 3 need to be returned for relationships
 //define relationships
-sqlModels.Region.hasMany(sqlModels.Dept, {
-  foreignKey: "codeRegion",
-});
-sqlModels.Dept.belongsTo(sqlModels.Region, {
-  foreignKey: "code",
-});
-sqlModels.Salon.belongsTo(sqlModels.Dept, {
-  foreignKey: "code",
-});
-sqlModels.Dept.hasMany(sqlModels.Salon, {
-  foreignKey: "code",
-});
-sqlModels.Salon.hasMany(sqlModels.Report, {
-  foreignKey: "salon_id",
-});
-sqlModels.Report.belongsTo(sqlModels.Salon, {
-  foreignKey: "salon_id",
-});
-
-sqlModels.Salon.belongsToMany(sqlModels.User, {
-  through: sqlModels.User_Salon, //CASCADE DELETE by default
-});
-sqlModels.User.belongsToMany(sqlModels.Salon, {
-  through: sqlModels.User_Salon, //CASCADE DELETE by default
-});
+Artist.hasMany(Event, {foreignKey: "performer"});
+Event.belongsTo(Artist, {foreignKey: "id"});
+Poi.hasMany(Event, {foreignKey: "location"});
+Event.belongsTo(Poi, {foreignKey: "id"});
 
 let flg = 0; //error flag if any
-sqlServerConnection
+mySqlConnection
   .authenticate()
   .then(() => {
     flg += 1; //indicates a successful connection
     console.log("[API]: successfully connected to MySQL server !");
-    return sqlServerConnection.sync({alter: true}); //returned promise should sync all tables and models, alter=true means update tables where actual model definition has changed
+    return mySqlConnection.sync({alter: true}); //returned promise should sync all tables and models, alter=true means update tables where actual model definition has changed
   })
   .then(() => {
     console.log("[API]: MySQL tables and models successfully synced !");
@@ -72,6 +48,19 @@ sqlServerConnection
     }
     console.log(msg, err.message);
   });
+/*DEALING WITH MONGO DB*/
+mongoose
+  .connect(
+    environment.mongo_db_connection
+      .replace("user", environment.user)
+      .replace("pwd", environment.userPwd)
+  )
+  .then(() => {
+    console.log("[API]: successfully connected to MongoDB server !");
+  })
+  .catch((err) => {
+    console.log("[API]: failed to connect to MongoDB server !", err.message);
+  });
 /*DEALING WITH EXPRESS*/
 const app = express();
 routes(app); //request pipeline including error handling
@@ -84,21 +73,3 @@ app.listen(port, () => {
     } server is listening on port ${port} 🚀`
   );
 });
-/*INITIALIZE DEPARTMENT/REGION DATA*/
-let data = await sqlModels.Dept.findOne();
-if (!data) await initDeptRegionData();
-/*INITIALIZE FAKE DATA WHEN DATABASE IS EMPTY*/
-data = await sqlModels.Report.findOne();
-if (!data) await generateData();
-/*LAUNCH CRON TASKS SCHEDULING*/
-nodeSchedule.scheduleJob(
-  {
-    date: 5, //job scheduled every 5th day of every month at 02:00
-    hour: 2,
-    minute: 0,
-    // second: 35,
-  },
-  () => {
-    sendReminder();
-  }
-);

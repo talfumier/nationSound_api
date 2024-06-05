@@ -1,6 +1,6 @@
 import {Op} from "sequelize";
 import {Unauthorized} from "../models/validation/errors.js";
-import {getModels} from "../models/sqlServerModels.js";
+import {getModels} from "../models/mysqlModels.js";
 
 export async function authValid(req, res, next) {
   //req.user returned from authHandler mw function since user must be authenticated

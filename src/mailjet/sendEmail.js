@@ -19,7 +19,7 @@ export const sendBasicEmail = (
         {
           From: {
             Email: environment.mail_jet_sender,
-            Name: "salons_api mailbox: do not reply",
+            Name: "nationsound_api mailbox: do not reply",
           },
           To: [
             {

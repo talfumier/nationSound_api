@@ -19,3 +19,18 @@ export function joiSubSchema(base, fields) {
   }
   return null;
 }
+export function bodyCleanUp(body) {
+  const keys = Object.keys(body);
+  keys.map((key) => {
+    switch (key) {
+      case "last_name":
+      case "first_name":
+      case "role":
+      case "email":
+        body[key] = body[key].toString().trim();
+        break;
+      default:
+    }
+  });
+  return body;
+}
