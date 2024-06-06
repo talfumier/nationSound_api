@@ -29,7 +29,7 @@ router.patch(
       `<b>${user.email}</b> (id:${user.id}) avec le rôle '${user.role}' a été validé.`
     );
     res.send({
-      status: "OK",
+      statusCode: "200",
       message: `User with id:${userId} successfully validated.`,
       data: user,
     });

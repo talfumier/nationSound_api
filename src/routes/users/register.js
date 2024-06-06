@@ -51,7 +51,7 @@ router.post(
       `<b>${user.email}</b> (id:${user.id}) avec le rôle '${user.role}' attend votre validation.`
     );
     res.send({
-      status: "OK",
+      statusCode: "200",
       message: `User '${user.last_name} ${user.first_name}' with role '${user.role}' successfully registered.`,
       data: user,
     });

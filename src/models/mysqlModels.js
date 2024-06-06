@@ -349,7 +349,7 @@ export function validateUser(user, cs = "post") {
     last_name: Joi.string(),
     first_name: Joi.string(),
     email: Joi.string().email(),
-    role: Joi.string().valid("admin", "editor", "reader"),
+    role: Joi.string().valid("admin", "editor"),
     validated: Joi.date().optional(),
     pwd: joiPassword
       .string()

@@ -15,7 +15,7 @@ router.get(
   routeHandler(async (req, res) => {
     const users = await User.findAll();
     res.send({
-      status: "OK",
+      statusCode: "200",
       data: users,
     });
   })
@@ -33,7 +33,7 @@ router.get(
     });
     if (!user) return res.send(new BadRequest(`User with id:${id} not found.`));
     res.send({
-      status: "OK",
+      statusCode: "200",
       data: user,
     });
   })
@@ -52,7 +52,7 @@ router.delete(
     if (!user) return res.send(new BadRequest(`User with id:${id} not found.`));
     await user.destroy();
     res.send({
-      status: "OK",
+      statusCode: "200",
       message: `User with id:${id} successfully deleted.`,
       data: user,
     });

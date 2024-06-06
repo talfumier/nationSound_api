@@ -31,7 +31,7 @@ router.patch(
       req.body.pwd = await bcrypt.hash(req.body.pwd, environment.salt_rounds);
     await user.update(req.body);
     res.send({
-      status: "OK",
+      statusCode: "200",
       message: `User with id:${id} successfully updated.`,
       data: user,
     });
@@ -51,7 +51,7 @@ router.delete(
     await user.destroy();
     user.pwd = undefined; //does not return the password
     res.send({
-      status: "OK",
+      statusCode: "200",
       message: `User with id:${id} successfully deleted.`,
       data: user,
     });

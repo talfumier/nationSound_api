@@ -42,7 +42,7 @@ router.post(
           .header("x-auth-token", token)
           .header("access-control-expose-headers", ["x-auth-token"])
           .send({
-            status: "OK",
+            statusCode: "200",
             message: `User with id:${user.id} successfully logged-in.`,
             data: user,
           });

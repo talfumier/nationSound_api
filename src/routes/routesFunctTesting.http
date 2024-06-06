@@ -1,6 +1,56 @@
 @admin_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibGFzdF9uYW1lIjoiTUFSVElORVoiLCJmaXJzdF9uYW1lIjoiSGVucmkiLCJlbWFpbCI6ImhlbnJpLnRhbGZ1bWllckB3YW5hZG9vLmZyIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzE3NjA4NDkwLCJleHAiOjE3MTc2NjI0OTB9.eazpDjUG8tny4_8gpJM2kIvnmmC1ti_nBav1T1JwdAc
 @user_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibGFzdF9uYW1lIjoiTUFSVElORVoiLCJmaXJzdF9uYW1lIjoiSGVucmkiLCJlbWFpbCI6ImhlbnJpLnRhbGZ1bWllcjFAd2FuYWRvby5mciIsInJvbGUiOiJlZGl0b3IiLCJpYXQiOjE3MTc2MTA2NDIsImV4cCI6MTcxNzY2NDY0Mn0.kdckHjKrAtBDIi57fMk_N9GcrUkI2qayrYLMdtPP1nk
 
+### DATES
+GET http://localhost:8000/api/dates
+
+### ARTISTS
+GET http://localhost:8000/api/artists
+###
+GET http://localhost:8000/api/artists/28881
+
+### POIS
+GET http://localhost:8000/api/pois
+###
+GET http://localhost:8000/api/pois/28929
+
+### EVENTS
+GET http://localhost:8000/api/events
+###
+GET http://localhost:8000/api/events/29218
+
+### FAQS
+GET http://localhost:8000/api/faqs
+###
+GET http://localhost:8000/api/faqs/29161
+
+### TRANSPORTS
+GET http://localhost:8000/api/transports
+###
+GET http://localhost:8000/api/transports/29149
+
+### MESSAGES
+GET http://localhost:8000/api/messages
+###
+GET http://localhost:8000/api/messages/28844
+
+### PARTNERS
+GET http://localhost:8000/api/partners
+###
+GET http://localhost:8000/api/partners/29276
+
+### NEWSLETTERS
+GET http://localhost:8000/api/newsletters
+###
+GET http://localhost:8000/api/newsletters/2948
+###
+POST http://localhost:8000/api/newsletters
+content-type: application/json
+
+{  
+  "email":"henri.talfumier1@gmail.com"
+}
+
 ### USERS
 POST http://localhost:8000/api/register
 content-type: application/json
