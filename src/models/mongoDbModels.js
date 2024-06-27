@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import Joi from "joi";
-import {joiSubSchema} from "./validation/joiUtilityFunctions.js";
+import {joiSubSchema} from "./validation/utilityFunctions.js";
 
 //MONGODB MODELS DEFINITION
 const ImageSchema = new mongoose.Schema(
@@ -8,6 +8,14 @@ const ImageSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+      trim: true,
+    },
+    type: {
+      type: String,
+      default: "image/png",
+    },
+    size: {
+      type: Number,
     },
     data: {
       type: String,

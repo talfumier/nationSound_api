@@ -17,6 +17,7 @@ const setEnv = () => {
     mail_jet_api_key:'${process.env.NATIONSOUND_API_MAILJETKEY}',
     mail_jet_api_secret:'${process.env.NATIONSOUND_API_MAILJETSECRET}',
     mail_jet_sender:'${process.env.NATIONSOUND_API_MAILJETSENDER}',
+    google_api_key:'${process.env.NATIONSOUND_API_GOOGLEAPIKEY}',
     production: true,
   };`;
   writeFile(targetPath, configFile, (err) => {

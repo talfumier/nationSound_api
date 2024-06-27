@@ -1,4 +1,3 @@
-// @ts-check
 import express from "express";
 import {errorHandler} from "../middleware/errorHandler.js";
 import {invalidPathHandler} from "../middleware/invalidPathHandler.js";
@@ -11,6 +10,8 @@ import transports from "./transports.js";
 import messages from "./messages.js";
 import newsletters from "./newsletters.js";
 import partners from "./partners.js";
+import images from "./images/images.js";
+import translate from "./google/translate.js";
 import register from "./users/register.js";
 import validate from "./users/validate.js";
 import login from "./users/login.js";
@@ -19,6 +20,14 @@ import users from "./users/users.js";
 
 export function routes(app) {
   app.use(express.json()); //express built-in middleware applies to any route
+  app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // indicate from which domain the request is coming from (CORS)
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+  });
 
   app.use("/api/dates", dates);
   app.use("/api/artists", artists);
@@ -29,6 +38,8 @@ export function routes(app) {
   app.use("/api/messages", messages);
   app.use("/api/newsletters", newsletters);
   app.use("/api/partners", partners);
+  app.use("/api/images", images);
+  app.use("/api/translate", translate);
 
   app.use("/api/register", register);
   app.use("/api/validate", validate);

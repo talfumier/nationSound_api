@@ -34,3 +34,10 @@ export function bodyCleanUp(body) {
   });
   return body;
 }
+export const JoiObjectIdSchema = Joi.string()
+  .regex(/^[0-9a-fA-F]{24}$/)
+  .required();
+export function validateObjectId(id) {
+  //ObjectId validation
+  return JoiObjectIdSchema.validate(id);
+}

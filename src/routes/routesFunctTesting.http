@@ -38,7 +38,7 @@ GET http://localhost:8000/api/messages/28844
 GET http://localhost:8000/api/partners
 ###
 GET http://localhost:8000/api/partners/29276
-
+  
 ### NEWSLETTERS
 GET http://localhost:8000/api/newsletters
 ###
@@ -49,6 +49,23 @@ content-type: application/json
 
 {  
   "email":"henri.talfumier1@gmail.com"
+}
+
+### IMAGES
+POST http://localhost:8000/api/images/init
+content-type: application/json
+
+{  
+  "last_name":"MARTINEZ2"
+}
+
+### TRANSLATE
+POST http://localhost:8000/api/translate
+content-type: application/json
+
+{  
+  "text":"invalid path",
+  "to":"fr"
 }
 
 ### USERS

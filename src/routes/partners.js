@@ -22,7 +22,7 @@ router.get(
   routeHandler(async (req, res) => {
     const id = req.params.id;
     const {error} = validateIntegerId(id);
-    if (error) return res.send(new BadRequest(error.details[0].partner));
+    if (error) return res.send(new BadRequest(error.details[0].message));
     const partner = await Partner.findByPk(id);
     if (!partner)
       return res.send(new BadRequest(`Partner with id:${id} not found.`));
