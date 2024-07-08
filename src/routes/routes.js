@@ -10,7 +10,7 @@ import transports from "./transports.js";
 import messages from "./messages.js";
 import newsletters from "./newsletters.js";
 import partners from "./partners.js";
-import images from "./images/images.js";
+import images from "./images.js";
 import translate from "./google/translate.js";
 import register from "./users/register.js";
 import validate from "./users/validate.js";
@@ -22,6 +22,7 @@ export function routes(app) {
   app.use(express.json()); //express built-in middleware applies to any route
   app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // indicate from which domain the request is coming from (CORS)
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
     res.header(
       "Access-Control-Allow-Headers",
       "Origin, X-Requested-With, Content-Type, Accept"

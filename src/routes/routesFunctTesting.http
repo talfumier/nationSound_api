@@ -8,6 +8,26 @@ GET http://localhost:8000/api/dates
 GET http://localhost:8000/api/artists
 ###
 GET http://localhost:8000/api/artists/28881
+###
+PATCH http://localhost:8000/api/artists/28881
+content-type: application/json
+
+{
+  "name":"Cosmic Jazz Odyssey"
+}
+###
+POST http://localhost:8000/api/artists
+content-type: application/json
+
+{
+  "name":"xxxx",
+  "country":"ccccc",
+  "description":"vvvvvv",
+  "composition":"vvvv",
+  "style":"nnnnnnnnn"
+}
+###
+DELETE  http://localhost:8000/api/artists/28925
 
 ### POIS
 GET http://localhost:8000/api/pois
@@ -52,12 +72,48 @@ content-type: application/json
 }
 
 ### IMAGES
-POST http://localhost:8000/api/images/init
+GET http://localhost:8000/api/images
+###
+GET http://localhost:8000/api/images/66894a324abffc91307c5418
+###
+POST http://localhost:8000/api/images
 content-type: application/json
 
 {  
-  "last_name":"MARTINEZ2"
+  "images":[{
+    "name": "vvv",
+    "main": false,
+    "lastModified":1235,
+    "type":".jpg",
+    "size": 345,
+    "data":"tttttttt"
+  }]
 }
+###
+PATCH http://localhost:8000/api/images/668bc6cf694186c931cad515
+content-type: application/json
+
+{  
+  "images":[{
+    "name": "vvvuuuuu",
+    "main": false,
+    "lastModified":1235,
+    "type":".jpg",
+    "size": 345,
+    "data":"tttttttt"
+  },{
+    "name": "uuuuvvvvv",
+    "main": false,
+    "lastModified":1235,
+    "type":".jpg",
+    "size": 345,
+    "data":"uuuuuuuu"
+  }]
+}
+###
+DELETE http://localhost:8000/api/images/668806c21ffb0e5cad3eb37f
+###
+DELETE http://localhost:8000/api/images/artist/28891/0
 
 ### TRANSLATE
 POST http://localhost:8000/api/translate

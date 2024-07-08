@@ -2,7 +2,7 @@ import {DataTypes} from "sequelize";
 import Joi from "joi";
 import {joiPasswordExtendCore} from "joi-password";
 import {joiSubSchema} from "./validation/utilityFunctions.js";
-//MYSQL MODELS DEFINITION
+/* MYSQL MODELS DEFINITION */
 export let Dates,
   Artist,
   Poi,
@@ -36,10 +36,13 @@ export function defineMySqlModels(mySqlConnection) {
     name: {type: DataTypes.STRING, allowNull: false},
     country: {type: DataTypes.STRING, allowNull: false},
     description: {type: DataTypes.STRING, allowNull: false},
-    albums: {type: DataTypes.STRING, allowNull: true},
+    albums: {type: DataTypes.STRING, allowNull: true, defaultValue: ""},
     composition: {type: DataTypes.STRING, allowNull: false},
     style: {type: DataTypes.STRING, allowNull: false},
-    image: {type: DataTypes.STRING, allowNull: true}, //image ObjectId in mongoDB
+    images_id: {
+      type: DataTypes.STRING,
+      allowNull: true, //images container _id in mongoDB
+    },
   });
   Poi = mySqlConnection.define("pois", {
     id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
@@ -112,7 +115,7 @@ export function defineMySqlModels(mySqlConnection) {
     Event,
   };
 }
-//USER INPUT VALIDATION
+/* USER INPUT VALIDATION */
 export function validateDates(dates, cs = "post") {
   let schema = Joi.object({
     start_date: Joi.date(),
@@ -154,15 +157,22 @@ export function validateArtist(artist, cs = "post") {
     name: Joi.string(),
     country: Joi.string(),
     description: Joi.string(),
-    albums: Joi.string().allowNull(),
+    albums: Joi.string().allow(null),
     composition: Joi.string(),
     style: Joi.string(),
-    image: Joi.string().allowNull(),
+    images_id: Joi.string().allow(null),
   });
   let required = [];
   switch (cs) {
     case "post":
-      required = ["name", "country", "description", "composition", "style"];
+      required = [
+        "name",
+        "country",
+        "description",
+        "composition",
+        "style",
+        "images_id",
+      ];
       schema = schema.fork(required, (field) => field.required());
       return schema.validate(artist);
     case "get":
