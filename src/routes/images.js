@@ -60,7 +60,7 @@ router.post(
     });
   })
 );
-router.patch(
+router.put(
   "/:id", //image container id > artist.images_id | partner.images_id
   // [authHandler], //user must be logged in
   routeHandler(async (req, res) => {

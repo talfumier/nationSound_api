@@ -19,10 +19,13 @@ import profile from "./users/profile.js";
 import users from "./users/users.js";
 
 export function routes(app) {
-  app.use(express.json()); //express built-in middleware applies to any route
+  app.use(express.json({limit: "10mb"})); //express built-in middleware applies to any route
   app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // indicate from which domain the request is coming from (CORS)
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
+    res.header(
+      "Access-Control-Allow-Methods",
+      "GET,HEAD,OPTIONS,POST,PUT,PATCH,DELETE"
+    );
     res.header(
       "Access-Control-Allow-Headers",
       "Origin, X-Requested-With, Content-Type, Accept"

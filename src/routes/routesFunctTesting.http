@@ -90,7 +90,7 @@ content-type: application/json
   }]
 }
 ###
-PATCH http://localhost:8000/api/images/668bc6cf694186c931cad515
+PUT http://localhost:8000/api/images/668bc6cf694186c931cad515
 content-type: application/json
 
 {  
