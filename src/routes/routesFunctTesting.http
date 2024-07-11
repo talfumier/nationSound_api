@@ -5,18 +5,20 @@
 GET http://localhost:8000/api/dates
 
 ### ARTISTS
-GET http://localhost:8000/api/artists
+GET http://localhost:8000/api/entities/artist
 ###
-GET http://localhost:8000/api/artists/28881
+GET http://localhost:8000/api/entities/artist
 ###
-PATCH http://localhost:8000/api/artists/28881
+GET http://localhost:8000/api/entities/artist/28881
+###
+PATCH http://localhost:8000/api/entities/artist/28881
 content-type: application/json
 
 {
   "name":"Cosmic Jazz Odyssey"
 }
 ###
-POST http://localhost:8000/api/artists
+POST http://localhost:8000/api/entities/artist
 content-type: application/json
 
 {
@@ -27,7 +29,7 @@ content-type: application/json
   "style":"nnnnnnnnn"
 }
 ###
-DELETE  http://localhost:8000/api/artists/28925
+DELETE  http://localhost:8000/api/entities/artist/28972
 
 ### POIS
 GET http://localhost:8000/api/pois
@@ -45,9 +47,9 @@ GET http://localhost:8000/api/faqs
 GET http://localhost:8000/api/faqs/29161
 
 ### TRANSPORTS
-GET http://localhost:8000/api/transports
+GET http://localhost:8000/api/entities/transport
 ###
-GET http://localhost:8000/api/transports/29149
+GET http://localhost:8000/api/entities/transport/29149
 
 ### MESSAGES
 GET http://localhost:8000/api/messages
@@ -55,9 +57,9 @@ GET http://localhost:8000/api/messages
 GET http://localhost:8000/api/messages/28844
 
 ### PARTNERS
-GET http://localhost:8000/api/partners
+GET http://localhost:8000/api/entities/partner
 ###
-GET http://localhost:8000/api/partners/29276
+GET http://localhost:8000/api/entities/partner/29276
   
 ### NEWSLETTERS
 GET http://localhost:8000/api/newsletters

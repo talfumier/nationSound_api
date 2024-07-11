@@ -66,7 +66,7 @@ export function defineMySqlModels(mySqlConnection) {
   });
   Transport = mySqlConnection.define("transports", {
     id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
-    title: {type: DataTypes.STRING, allowNull: false},
+    name: {type: DataTypes.STRING, allowNull: false},
     transport_mean: {type: DataTypes.STRING, allowNull: false},
     description: {type: DataTypes.STRING, allowNull: false},
   });
@@ -85,7 +85,10 @@ export function defineMySqlModels(mySqlConnection) {
   Partner = mySqlConnection.define("partners", {
     id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
     name: {type: DataTypes.STRING, allowNull: false},
-    image: {type: DataTypes.STRING, allowNull: true}, //image ObjectId in mongoDB
+    images_id: {
+      type: DataTypes.STRING,
+      allowNull: true, //images container _id in mongoDB
+    },
   });
   User = mySqlConnection.define("users", {
     id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
@@ -260,14 +263,14 @@ export function validateFaq(faq, cs = "post") {
 }
 export function validateTransport(transport, cs = "post") {
   let schema = Joi.object({
-    title: Joi.string(),
+    name: Joi.string(),
     transport_mean: Joi.string().valid("car", "plane", "train"),
     description: Joi.string(),
   });
   let required = [];
   switch (cs) {
     case "post":
-      required = ["title", "transport_mean", "description"];
+      required = ["name", "transport_mean", "description"];
       schema = schema.fork(required, (field) => field.required());
       return schema.validate(transport);
     case "get":
