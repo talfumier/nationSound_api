@@ -1,13 +1,8 @@
 import express from "express";
 import {errorHandler} from "../middleware/errorHandler.js";
 import {invalidPathHandler} from "../middleware/invalidPathHandler.js";
-import dates from "./dates.js";
 import entities from "./entities.js";
-import pois from "./pois.js";
 import events from "./events.js";
-import faqs from "./faqs.js";
-import transports from "./transports.js";
-import messages from "./messages.js";
 import newsletters from "./newsletters.js";
 import images from "./images.js";
 import translate from "./google/translate.js";
@@ -32,13 +27,8 @@ export function routes(app) {
     next();
   });
 
-  app.use("/api/dates", dates);
   app.use("/api/entities", entities);
-  app.use("/api/pois", pois);
   app.use("/api/events", events);
-  app.use("/api/faqs", faqs);
-  app.use("/api/transports", transports);
-  app.use("/api/messages", messages);
   app.use("/api/newsletters", newsletters);
   app.use("/api/images", images);
   app.use("/api/translate", translate);

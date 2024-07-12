@@ -289,7 +289,7 @@ export function validateMessage(message, cs = "post") {
   let schema = Joi.object({
     title: Joi.string(),
     text: Joi.string(),
-    criticality: Joi.string().valid("info", "warning"),
+    criticality: Joi.string().valid("info", "warning", "critical"),
     active: Joi.boolean(),
     order: Joi.number(),
   });

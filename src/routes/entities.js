@@ -1,12 +1,28 @@
 import express from "express";
 import {routeHandler} from "../middleware/routeHandler.js";
 import {authHandler} from "../middleware/authHandler.js";
-import {Artist, validateArtist} from "../models/mysqlModels.js";
-import {Partner, validatePartner} from "../models/mysqlModels.js";
-import {Transport, validateTransport} from "../models/mysqlModels.js";
+import {
+  Artist,
+  validateArtist,
+  Partner,
+  validatePartner,
+  Transport,
+  validateTransport,
+  Faq,
+  validateFaq,
+  Message,
+  validateMessage,
+  Poi,
+  validatePoi,
+  Dates,
+  validateDates,
+} from "../models/mysqlModels.js";
 import {ImageContainer} from "../models/mongoDbModels.js";
 import {BadRequest, Unauthorized} from "../models/validation/errors.js";
-import {validateIntegerId} from "../models/validation/utilityFunctions.js";
+import {
+  validateIntegerId,
+  strToDate,
+} from "../models/validation/utilityFunctions.js";
 import {Event} from "../models/mysqlModels.js";
 
 const router = express.Router();
@@ -14,14 +30,53 @@ const router = express.Router();
 const model = (entity) => {
   switch (entity) {
     case "artist":
-      return {model: Artist, validate: validateArtist, label: "Artist"};
+      return {
+        model: Artist,
+        validate: validateArtist,
+        master: "name",
+        label: "Artist",
+      };
     case "partner":
-      return {model: Partner, validate: validatePartner, label: "Partner"};
+      return {
+        model: Partner,
+        validate: validatePartner,
+        master: "name",
+        label: "Partner",
+      };
     case "transport":
       return {
         model: Transport,
         validate: validateTransport,
+        master: "name",
         label: "Transport",
+      };
+    case "faq":
+      return {
+        model: Faq,
+        validate: validateFaq,
+        master: "question",
+        label: "FAQ",
+      };
+    case "message":
+      return {
+        model: Message,
+        validate: validateMessage,
+        master: "title",
+        label: "Messages",
+      };
+    case "poi":
+      return {
+        model: Poi,
+        validate: validatePoi,
+        master: "name",
+        label: "Lieux",
+      };
+    case "date":
+      return {
+        model: Dates,
+        validate: validateDates,
+        master: "start_date",
+        label: "Dates",
       };
   }
 };
@@ -58,23 +113,32 @@ router.post(
   // [authHandler, authAdmin],
   routeHandler(async (req, res) => {
     const mdl = model(req.params.model);
+    if (mdl.model === Dates) {
+      req.body = {
+        ...req.body,
+        start_date: strToDate(req.body.start_date),
+        end_date: strToDate(req.body.end_date),
+      };
+    }
     const {error} = mdl.validate(req.body, "post");
     if (error) return res.send(new BadRequest(error.details[0].message));
     let data = await mdl.model.findOne({
       where: {
-        name: req.body.name,
+        [mdl.master]: req.body[mdl.master],
       },
     });
     if (data)
       return res.send(
         new BadRequest(
-          `${mdl.label} with name:'${req.body.name}' does already exist.`
+          `${mdl.label} with '${req.body[mdl.master]}' does already exist.`
         )
       );
     data = await mdl.model.create(req.body);
     res.send({
       status: "OK",
-      message: `${mdl.label} '${data.name}' successfully created with id:${data.id}.`,
+      message: `${mdl.label} '${
+        data[mdl.master]
+      }' successfully created with id:${data.id}.`,
       data,
     });
   })
@@ -95,7 +159,7 @@ router.patch(
     await data.update(req.body);
     res.send({
       status: "OK",
-      message: `${mdl.label} '${data.name}' successfully updated.`,
+      message: `${mdl.label} '${data[mdl.master]}' successfully updated.`,
       data,
     });
   })
@@ -133,7 +197,9 @@ router.delete(
     await data.destroy();
     res.send({
       status: "OK",
-      message: `${mdl.label} '${data.name}' and associated images successfully deleted.`,
+      message: `${mdl.label} '${
+        data[mdl.master]
+      }' and associated images successfully deleted.`,
       data,
     });
   })
