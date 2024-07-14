@@ -16,14 +16,12 @@ import {
   validatePoi,
   Dates,
   validateDates,
+  Event,
+  validateEvent,
 } from "../models/mysqlModels.js";
 import {ImageContainer} from "../models/mongoDbModels.js";
 import {BadRequest, Unauthorized} from "../models/validation/errors.js";
-import {
-  validateIntegerId,
-  strToDate,
-} from "../models/validation/utilityFunctions.js";
-import {Event} from "../models/mysqlModels.js";
+import {validateIntegerId} from "../models/validation/utilityFunctions.js";
 
 const router = express.Router();
 
@@ -34,53 +32,51 @@ const model = (entity) => {
         model: Artist,
         validate: validateArtist,
         master: "name",
-        label: "Artist",
       };
     case "partner":
       return {
         model: Partner,
         validate: validatePartner,
         master: "name",
-        label: "Partner",
       };
     case "transport":
       return {
         model: Transport,
         validate: validateTransport,
         master: "name",
-        label: "Transport",
       };
     case "faq":
       return {
         model: Faq,
         validate: validateFaq,
         master: "question",
-        label: "FAQ",
       };
     case "message":
       return {
         model: Message,
         validate: validateMessage,
         master: "title",
-        label: "Messages",
       };
     case "poi":
       return {
         model: Poi,
         validate: validatePoi,
         master: "name",
-        label: "Lieux",
       };
     case "date":
       return {
         model: Dates,
         validate: validateDates,
         master: "start_date",
-        label: "Dates",
+      };
+    case "event":
+      return {
+        model: Event,
+        validate: validateEvent,
+        master: "performer",
       };
   }
 };
-
 router.get(
   "/:model",
   routeHandler(async (req, res) => {
@@ -101,7 +97,7 @@ router.get(
     if (error) return res.send(new BadRequest(error.details[0].message));
     const data = await mdl.model.findByPk(id);
     if (!data)
-      return res.send(new BadRequest(`Artist with id:${id} not found.`));
+      return res.send(new BadRequest(`Record with id:${id} not found.`));
     res.send({
       statusCode: "200",
       data,
@@ -113,32 +109,24 @@ router.post(
   // [authHandler, authAdmin],
   routeHandler(async (req, res) => {
     const mdl = model(req.params.model);
-    if (mdl.model === Dates) {
-      req.body = {
-        ...req.body,
-        start_date: strToDate(req.body.start_date),
-        end_date: strToDate(req.body.end_date),
-      };
-    }
     const {error} = mdl.validate(req.body, "post");
     if (error) return res.send(new BadRequest(error.details[0].message));
-    let data = await mdl.model.findOne({
-      where: {
-        [mdl.master]: req.body[mdl.master],
-      },
-    });
-    if (data)
-      return res.send(
-        new BadRequest(
-          `${mdl.label} with '${req.body[mdl.master]}' does already exist.`
-        )
-      );
+    let data = null;
+    if (mdl.model !== Event) {
+      data = await mdl.model.findOne({
+        where: {
+          [mdl.master]: req.body[mdl.master],
+        },
+      });
+      if (data)
+        return res.send(
+          new BadRequest(`Record '${req.body[mdl.master]}' does already exist.`)
+        );
+    }
     data = await mdl.model.create(req.body);
     res.send({
       status: "OK",
-      message: `${mdl.label} '${
-        data[mdl.master]
-      }' successfully created with id:${data.id}.`,
+      message: `Record successfully created with id:${data.id}.`,
       data,
     });
   })
@@ -153,13 +141,13 @@ router.patch(
     if (error) return res.send(new BadRequest(error.details[0].message));
     const data = await mdl.model.findByPk(id);
     if (!data)
-      return res.send(new BadRequest(`${mdl.label} with id:${id} not found.`));
+      return res.send(new BadRequest(`Record with id:${id} not found.`));
     error = mdl.validate(req.body, "patch").error;
     if (error) return res.send(new BadRequest(error.details[0].message));
     await data.update(req.body);
     res.send({
       status: "OK",
-      message: `${mdl.label} '${data[mdl.master]}' successfully updated.`,
+      message: `Record successfully updated.`,
       data,
     });
   })
@@ -174,14 +162,16 @@ router.delete(
     if (error) return res.send(new BadRequest(error.details[0].message));
     const data = await mdl.model.findByPk(id);
     if (!data)
-      return res.send(new BadRequest(`${mdl.label} with id:${id} not found.`));
-    //check if related records prevent artist deletion
-    if (mod === "artist") {
-      const event = await Event.findOne({where: {performer: id}});
+      return res.send(new BadRequest(`Record with id:${id} not found.`));
+    //check if related records prevent artist or poi deletion
+    if (mod === "artist" || mod === "poi") {
+      const event = await Event.findOne({
+        where: {[mod === "artist" ? "performer" : "location"]: id},
+      });
       if (event)
         return res.send(
           new Unauthorized(
-            `${mdl.label} id:${id} cannot be deleted due to related records.`
+            `Record id:${id} cannot be deleted due to related records.`
           )
         );
     }
@@ -197,9 +187,7 @@ router.delete(
     await data.destroy();
     res.send({
       status: "OK",
-      message: `${mdl.label} '${
-        data[mdl.master]
-      }' and associated images successfully deleted.`,
+      message: `Record '${id}' and associated images (if any) successfully deleted.`,
       data,
     });
   })

@@ -2,8 +2,6 @@ import express from "express";
 import {errorHandler} from "../middleware/errorHandler.js";
 import {invalidPathHandler} from "../middleware/invalidPathHandler.js";
 import entities from "./entities.js";
-import events from "./events.js";
-import newsletters from "./newsletters.js";
 import images from "./images.js";
 import translate from "./google/translate.js";
 import register from "./users/register.js";
@@ -28,8 +26,6 @@ export function routes(app) {
   });
 
   app.use("/api/entities", entities);
-  app.use("/api/events", events);
-  app.use("/api/newsletters", newsletters);
   app.use("/api/images", images);
   app.use("/api/translate", translate);
 

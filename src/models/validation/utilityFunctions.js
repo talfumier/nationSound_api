@@ -41,7 +41,3 @@ export function validateObjectId(id) {
   //ObjectId validation
   return JoiObjectIdSchema.validate(id);
 }
-export function strToDate(str) {
-  const arr = str.split("/");
-  return new Date(`${arr[2]}/${arr[1]}/${arr[0]}`);
-}
