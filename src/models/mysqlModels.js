@@ -12,6 +12,7 @@ export let Dates,
   Message,
   Newsletter,
   Partner,
+  Map,
   User,
   connection;
 export function defineMySqlModels(mySqlConnection) {
@@ -90,6 +91,15 @@ export function defineMySqlModels(mySqlConnection) {
       allowNull: true, //files container _id in mongoDB
     },
   });
+  Map = mySqlConnection.define("maps", {
+    id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
+    name: {type: DataTypes.STRING, allowNull: false},
+    files_id: {
+      type: DataTypes.STRING,
+      allowNull: true, //files container _id in mongoDB
+    },
+  });
+
   User = mySqlConnection.define("users", {
     id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
     last_name: {type: DataTypes.STRING, allowNull: false},
@@ -349,6 +359,29 @@ export function validatePartner(partner, cs = "post") {
       const subSchema = joiSubSchema(schema, Object.keys(partner));
       return subSchema
         ? subSchema.validate(partner)
+        : {
+            error: {
+              details: [{message: "Request body contains invalid fields."}],
+            },
+          };
+  }
+}
+export function validateMap(map, cs = "post") {
+  let schema = Joi.object({
+    name: Joi.string(),
+    files_id: Joi.string().allow(null),
+  });
+  let required = [];
+  switch (cs) {
+    case "post":
+      required = ["name", "files_id"];
+      schema = schema.fork(required, (field) => field.required());
+      return schema.validate(map);
+    case "get":
+    case "patch":
+      const subSchema = joiSubSchema(schema, Object.keys(map));
+      return subSchema
+        ? subSchema.validate(map)
         : {
             error: {
               details: [{message: "Request body contains invalid fields."}],

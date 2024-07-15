@@ -18,6 +18,8 @@ import {
   validateDates,
   Event,
   validateEvent,
+  Map,
+  validateMap,
 } from "../models/mysqlModels.js";
 import {FileContainer} from "../models/mongoDbModels.js";
 import {BadRequest, Unauthorized} from "../models/validation/errors.js";
@@ -74,6 +76,12 @@ const model = (entity) => {
         model: Event,
         validate: validateEvent,
         master: "performer",
+      };
+    case "map":
+      return {
+        model: Map,
+        validate: validateMap,
+        master: "name",
       };
   }
 };

@@ -20,8 +20,6 @@ content-type: application/json
 ### ARTISTS
 GET http://localhost:8000/api/entities/artist
 ###
-GET http://localhost:8000/api/entities/artist
-###
 GET http://localhost:8000/api/entities/artist/28881
 ###
 PATCH http://localhost:8000/api/entities/artist/28881

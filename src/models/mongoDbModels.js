@@ -37,7 +37,7 @@ export const File = mongoose.model("File", FileSchema);
 export const FileContainerSchema = new mongoose.Schema(
   {
     // _id: {type: Number, required: true},
-    images: [{type: FileSchema, required: true, default: []}],
+    files: [{type: FileSchema, required: true, default: []}],
   },
   {timestamps: true}
 );
@@ -81,33 +81,3 @@ export function validateFile(file, cs = "post") {
           };
   }
 }
-
-/* UMAP JSON DATA */
-const UmapSchema = new mongoose.Schema(
-  {
-    type: {
-      type: String,
-      required: true,
-    },
-    geometry: {
-      type: Object,
-      required: true,
-    },
-    properties: {
-      type: Object,
-      required: true,
-    },
-    uri: {
-      type: String,
-      required: true,
-    },
-    layers: [
-      {
-        type: Object,
-        required: true,
-      },
-    ],
-  },
-  {timestamps: true}
-);
-export const Umap = mongoose.model("Umap", UmapSchema);
