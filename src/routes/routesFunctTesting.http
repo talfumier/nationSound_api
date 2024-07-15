@@ -40,7 +40,7 @@ content-type: application/json
   "description":"vvvvvv",
   "composition":"vvvv",
   "style":"nnnnnnnnn",
-  "images_id":null
+  "files_id":null
 }
 ###
 DELETE  http://localhost:8000/api/entities/artist/28881
@@ -81,7 +81,7 @@ PATCH http://localhost:8000/api/entities/partner/29276
 content-type: application/json
 
 {  
-  "images_id":"669445f1cd2eee19bf6f9f73"
+  "files_id":"669445f1cd2eee19bf6f9f73"
 }
   
 ### NEWSLETTERS
@@ -97,15 +97,15 @@ content-type: application/json
 }
 
 ### IMAGES
-GET http://localhost:8000/api/images
+GET http://localhost:8000/api/files
 ###
-GET http://localhost:8000/api/images/66894a324abffc91307c5418
+GET http://localhost:8000/api/files/66894a324abffc91307c5418
 ###
-POST http://localhost:8000/api/images
+POST http://localhost:8000/api/files
 content-type: application/json
 
 {  
-  "images":[{
+  "files":[{
     "name": "vvv",
     "main": false,
     "lastModified":1235,
@@ -115,11 +115,11 @@ content-type: application/json
   }]
 }
 ###
-PUT http://localhost:8000/api/images/668bc6cf694186c931cad515
+PUT http://localhost:8000/api/files/668bc6cf694186c931cad515
 content-type: application/json
 
 {  
-  "images":[{
+  "files":[{
     "name": "vvvuuuuu",
     "main": false,
     "lastModified":1235,
@@ -136,9 +136,9 @@ content-type: application/json
   }]
 }
 ###
-DELETE http://localhost:8000/api/images/668806c21ffb0e5cad3eb37f
+DELETE http://localhost:8000/api/files/668806c21ffb0e5cad3eb37f
 ###
-DELETE http://localhost:8000/api/images/artist/28891/0
+DELETE http://localhost:8000/api/files/artist/28891/0
 
 ### TRANSLATE
 POST http://localhost:8000/api/translate

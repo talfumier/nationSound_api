@@ -5,7 +5,7 @@ import {joiSubSchema} from "./validation/utilityFunctions.js";
 /*MONGODB MODELS DEFINITION*/
 
 /* IMAGES & IMAGE CONTAINERS */
-export const ImageSchema = new mongoose.Schema({
+export const FileSchema = new mongoose.Schema({
   //single image schema
   _id: false,
   name: {
@@ -33,20 +33,20 @@ export const ImageSchema = new mongoose.Schema({
     default: "",
   },
 });
-export const Image = mongoose.model("Image", ImageSchema);
-export const ImageContainerSchema = new mongoose.Schema(
+export const File = mongoose.model("File", FileSchema);
+export const FileContainerSchema = new mongoose.Schema(
   {
     // _id: {type: Number, required: true},
-    images: [{type: ImageSchema, required: true, default: []}],
+    images: [{type: FileSchema, required: true, default: []}],
   },
   {timestamps: true}
 );
-export const ImageContainer = mongoose.model(
-  "ImageContainer",
-  ImageContainerSchema
+export const FileContainer = mongoose.model(
+  "FileContainer",
+  FileContainerSchema
 );
 /* USER INPUT VALIDATION */
-export const JoiImageSchema = Joi.object({
+export const JoiFileSchema = Joi.object({
   name: Joi.string(),
   lastModified: Joi.number(),
   main: Joi.boolean(),
@@ -54,7 +54,7 @@ export const JoiImageSchema = Joi.object({
   size: Joi.number(),
   data: Joi.string(),
 });
-export function validateImage(image, cs = "post") {
+export function validateFile(file, cs = "post") {
   let schema = Joi.object({
     name: Joi.string().optional(),
     lastModified: Joi.number().optional(),
@@ -68,12 +68,12 @@ export function validateImage(image, cs = "post") {
     case "post":
       required = ["name", "lastModified", "main", "type", "size", "data"];
       schema = schema.fork(required, (field) => field.required());
-      return schema.validate(image);
+      return schema.validate(file);
     case "get":
     case "patch":
-      const subSchema = joiSubSchema(schema, Object.keys(image));
+      const subSchema = joiSubSchema(schema, Object.keys(file));
       return subSchema
-        ? subSchema.validate(image)
+        ? subSchema.validate(file)
         : {
             error: {
               details: [{message: "Request body contains invalid fields."}],

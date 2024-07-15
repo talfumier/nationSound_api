@@ -19,7 +19,7 @@ import {
   Event,
   validateEvent,
 } from "../models/mysqlModels.js";
-import {ImageContainer} from "../models/mongoDbModels.js";
+import {FileContainer} from "../models/mongoDbModels.js";
 import {BadRequest, Unauthorized} from "../models/validation/errors.js";
 import {validateIntegerId} from "../models/validation/utilityFunctions.js";
 
@@ -175,19 +175,19 @@ router.delete(
           )
         );
     }
-    if (data.images_id) {
-      const container = await ImageContainer.findByIdAndDelete({
-        _id: data.images_id,
+    if (data.files_id) {
+      const container = await FileContainer.findByIdAndDelete({
+        _id: data.files_id,
       });
       if (!container)
         return res.send(
-          new BadRequest(`Image container with id:${data.images_id} not found.`)
+          new BadRequest(`File container with id:${data.files_id} not found.`)
         );
     }
     await data.destroy();
     res.send({
       status: "OK",
-      message: `Record '${id}' and associated images (if any) successfully deleted.`,
+      message: `Record '${id}' and associated files (if any) successfully deleted.`,
       data,
     });
   })

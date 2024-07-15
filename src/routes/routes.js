@@ -2,7 +2,7 @@ import express from "express";
 import {errorHandler} from "../middleware/errorHandler.js";
 import {invalidPathHandler} from "../middleware/invalidPathHandler.js";
 import entities from "./entities.js";
-import images from "./images.js";
+import files from "./files.js";
 import translate from "./google/translate.js";
 import register from "./users/register.js";
 import validate from "./users/validate.js";
@@ -26,7 +26,7 @@ export function routes(app) {
   });
 
   app.use("/api/entities", entities);
-  app.use("/api/images", images);
+  app.use("/api/files", files);
   app.use("/api/translate", translate);
 
   app.use("/api/register", register);

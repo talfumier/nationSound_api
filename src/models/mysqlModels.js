@@ -39,9 +39,9 @@ export function defineMySqlModels(mySqlConnection) {
     albums: {type: DataTypes.STRING, allowNull: true, defaultValue: ""},
     composition: {type: DataTypes.STRING, allowNull: false},
     style: {type: DataTypes.STRING, allowNull: false},
-    images_id: {
+    files_id: {
       type: DataTypes.STRING,
-      allowNull: true, //images container _id in mongoDB
+      allowNull: true, //files container _id in mongoDB
     },
   });
   Poi = mySqlConnection.define("pois", {
@@ -85,9 +85,9 @@ export function defineMySqlModels(mySqlConnection) {
   Partner = mySqlConnection.define("partners", {
     id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
     name: {type: DataTypes.STRING, allowNull: false},
-    images_id: {
+    files_id: {
       type: DataTypes.STRING,
-      allowNull: true, //images container _id in mongoDB
+      allowNull: true, //files container _id in mongoDB
     },
   });
   User = mySqlConnection.define("users", {
@@ -163,7 +163,7 @@ export function validateArtist(artist, cs = "post") {
     albums: Joi.string().allow(null),
     composition: Joi.string(),
     style: Joi.string(),
-    images_id: Joi.string().allow(null),
+    files_id: Joi.string().allow(null),
   });
   let required = [];
   switch (cs) {
@@ -174,7 +174,7 @@ export function validateArtist(artist, cs = "post") {
         "description",
         "composition",
         "style",
-        "images_id",
+        "files_id",
       ];
       schema = schema.fork(required, (field) => field.required());
       return schema.validate(artist);
@@ -336,12 +336,12 @@ export function validateNewsletter(newsletter, cs = "post") {
 export function validatePartner(partner, cs = "post") {
   let schema = Joi.object({
     name: Joi.string(),
-    images_id: Joi.string().allow(null),
+    files_id: Joi.string().allow(null),
   });
   let required = [];
   switch (cs) {
     case "post":
-      required = ["name", "images_id"];
+      required = ["name", "files_id"];
       schema = schema.fork(required, (field) => field.required());
       return schema.validate(partner);
     case "get":
