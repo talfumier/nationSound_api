@@ -19,7 +19,7 @@ import {
   Event,
   validateEvent,
   Map,
-  validateMap,
+  Logo,
 } from "../models/mysqlModels.js";
 import {FileContainer} from "../models/mongoDbModels.js";
 import {BadRequest, Unauthorized} from "../models/validation/errors.js";
@@ -80,7 +80,13 @@ const model = (entity) => {
     case "map":
       return {
         model: Map,
-        validate: validateMap,
+        validate: validatePartner, //same validation as partner
+        master: "name",
+      };
+    case "logo":
+      return {
+        model: Logo,
+        validate: validatePartner, //same validation as partner
         master: "name",
       };
   }
