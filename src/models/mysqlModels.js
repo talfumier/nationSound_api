@@ -336,12 +336,12 @@ export function validateNewsletter(newsletter, cs = "post") {
 export function validatePartner(partner, cs = "post") {
   let schema = Joi.object({
     name: Joi.string(),
-    image: Joi.string().allowNull(),
+    images_id: Joi.string().allow(null),
   });
   let required = [];
   switch (cs) {
     case "post":
-      required = ["name", "image"];
+      required = ["name", "images_id"];
       schema = schema.fork(required, (field) => field.required());
       return schema.validate(partner);
     case "get":

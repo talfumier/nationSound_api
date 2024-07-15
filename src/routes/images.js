@@ -8,10 +8,7 @@ import {
   NotFound,
   Unauthorized,
 } from "../models/validation/errors.js";
-import {
-  validateIntegerId,
-  validateObjectId,
-} from "../models/validation/utilityFunctions.js";
+import {validateObjectId} from "../models/validation/utilityFunctions.js";
 
 const router = express.Router();
 

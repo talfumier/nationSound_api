@@ -76,6 +76,13 @@ GET http://localhost:8000/api/messages/28844
 GET http://localhost:8000/api/entities/partner
 ###
 GET http://localhost:8000/api/entities/partner/29276
+###
+PATCH http://localhost:8000/api/entities/partner/29276
+content-type: application/json
+
+{  
+  "images_id":"669445f1cd2eee19bf6f9f73"
+}
   
 ### NEWSLETTERS
 GET http://localhost:8000/api/newsletters
