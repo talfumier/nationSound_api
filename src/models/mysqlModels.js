@@ -125,6 +125,10 @@ export function defineMySqlModels(mySqlConnection) {
       defaultValue: null,
     },
     pwd: {type: DataTypes.STRING, allowNull: false},
+    files_id: {
+      type: DataTypes.STRING,
+      allowNull: true, //files container _id in mongoDB
+    },
     last_connection: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
@@ -391,6 +395,7 @@ export function validateUser(user, cs = "post") {
       .minOfUppercase(1)
       .minOfNumeric(1)
       .noWhiteSpaces(),
+    files_id: Joi.string().allow(null),
     last_connection: Joi.date(),
   });
   let required = [];

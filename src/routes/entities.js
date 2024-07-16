@@ -20,6 +20,8 @@ import {
   validateEvent,
   Map,
   Logo,
+  User,
+  validateUser,
 } from "../models/mysqlModels.js";
 import {FileContainer} from "../models/mongoDbModels.js";
 import {BadRequest, Unauthorized} from "../models/validation/errors.js";
@@ -88,6 +90,12 @@ const model = (entity) => {
         model: Logo,
         validate: validatePartner, //same validation as partner
         master: "name",
+      };
+    case "user":
+      return {
+        model: User,
+        validate: validateUser, //same validation as partner
+        master: "last_name",
       };
   }
 };
