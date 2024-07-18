@@ -128,7 +128,7 @@ router.get(
 );
 router.post(
   "/:model/",
-  // [authHandler, authAdmin],
+  authHandler,
   routeHandler(async (req, res) => {
     const mdl = model(req.params.model);
     const {error} = mdl.validate(req.body, "post");
@@ -155,7 +155,7 @@ router.post(
 );
 router.patch(
   "/:model/:id",
-  // [authHandler, authValid],
+  authHandler,
   routeHandler(async (req, res) => {
     const {model: mod, id} = req.params;
     const mdl = model(mod);
@@ -176,7 +176,7 @@ router.patch(
 );
 router.delete(
   "/:model/:id",
-  // [authHandler, authAdmin, authValid],
+  authHandler,
   routeHandler(async (req, res) => {
     const {model: mod, id} = req.params;
     const mdl = model(mod);

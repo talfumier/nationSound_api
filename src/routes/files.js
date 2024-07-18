@@ -3,11 +3,7 @@ import _ from "lodash";
 import {routeHandler} from "../middleware/routeHandler.js";
 import {authHandler} from "../middleware/authHandler.js";
 import {FileContainer, validateFile} from "../models/mongoDbModels.js";
-import {
-  BadRequest,
-  NotFound,
-  Unauthorized,
-} from "../models/validation/errors.js";
+import {BadRequest} from "../models/validation/errors.js";
 import {validateObjectId} from "../models/validation/utilityFunctions.js";
 
 const router = express.Router();
@@ -41,7 +37,7 @@ router.get(
 );
 router.post(
   "/",
-  // [authHandler], //user must be logged in
+  [authHandler], //user must be logged in
   routeHandler(async (req, res) => {
     let error = null;
     req.body.files.map((img) => {
@@ -59,7 +55,7 @@ router.post(
 );
 router.put(
   "/:id", //file container id > artist.files_id | partner.files_id
-  // [authHandler], //user must be logged in
+  [authHandler], //user must be logged in
   routeHandler(async (req, res) => {
     const id = req.params.id;
     let error = validateObjectId(id).error;
@@ -80,7 +76,7 @@ router.put(
 );
 router.delete(
   "/:id", //file container _id
-  // [authHandler], //user must be logged in
+  [authHandler], //user must be logged in
   routeHandler(async (req, res) => {
     const id = req.params.id;
     const {error} = validateObjectId(id);

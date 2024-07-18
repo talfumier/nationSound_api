@@ -111,8 +111,8 @@ export function defineMySqlModels(mySqlConnection) {
 
   User = mySqlConnection.define("users", {
     id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
-    last_name: {type: DataTypes.STRING, allowNull: false},
-    first_name: {type: DataTypes.STRING, allowNull: false},
+    last_name: {type: DataTypes.STRING, allowNull: true},
+    first_name: {type: DataTypes.STRING, allowNull: true},
     email: {type: DataTypes.STRING, allowNull: false},
     role: {
       type: DataTypes.STRING,
@@ -382,8 +382,8 @@ export function validatePartner(partner, cs = "post") {
 export function validateUser(user, cs = "post") {
   const joiPassword = Joi.extend(joiPasswordExtendCore);
   let schema = Joi.object({
-    last_name: Joi.string(),
-    first_name: Joi.string(),
+    last_name: Joi.string().allow(null),
+    first_name: Joi.string().allow(null),
     email: Joi.string().email(),
     role: Joi.string().valid("admin", "editor"),
     validated: Joi.date().optional(),
@@ -401,7 +401,7 @@ export function validateUser(user, cs = "post") {
   let required = [];
   switch (cs) {
     case "post":
-      required = ["last_name", "first_name", "email", "role", "pwd"];
+      required = ["email", "role", "pwd"];
       schema = schema.fork(required, (field) => field.required());
       return schema.validate(user);
     case "get":

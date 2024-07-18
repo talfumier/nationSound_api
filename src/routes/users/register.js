@@ -1,4 +1,3 @@
-// @ts-check
 import express from "express";
 import bcrypt from "bcrypt";
 import {routeHandler} from "../../middleware/routeHandler.js";
@@ -52,7 +51,7 @@ router.post(
     );
     res.send({
       statusCode: "200",
-      message: `User '${user.last_name} ${user.first_name}' with role '${user.role}' successfully registered.`,
+      message: `User '${user.email}' successfully registered ! Account is waiting for validation by the system administrator.`,
       data: user,
     });
   })
