@@ -1,4 +1,3 @@
-// @ts-check
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -30,6 +29,7 @@ router.post(
             first_name: user.first_name,
             email: user.email,
             role: user.role,
+            files_id: user.files_id,
           },
           environment.sha256,
           {

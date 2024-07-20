@@ -1,5 +1,5 @@
-@admin_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibGFzdF9uYW1lIjoiTUFSVElORVoiLCJmaXJzdF9uYW1lIjoiSGVucmkiLCJlbWFpbCI6ImhlbnJpLnRhbGZ1bWllckB3YW5hZG9vLmZyIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzE3NjA4NDkwLCJleHAiOjE3MTc2NjI0OTB9.eazpDjUG8tny4_8gpJM2kIvnmmC1ti_nBav1T1JwdAc
-@user_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibGFzdF9uYW1lIjoiTUFSVElORVoiLCJmaXJzdF9uYW1lIjoiSGVucmkiLCJlbWFpbCI6ImhlbnJpLnRhbGZ1bWllcjFAd2FuYWRvby5mciIsInJvbGUiOiJlZGl0b3IiLCJpYXQiOjE3MTc2MTA2NDIsImV4cCI6MTcxNzY2NDY0Mn0.kdckHjKrAtBDIi57fMk_N9GcrUkI2qayrYLMdtPP1nk
+@admin_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibGFzdF9uYW1lIjoiTUFSVElORVoiLCJmaXJzdF9uYW1lIjoiSGVucmkiLCJlbWFpbCI6ImhlbnJpLnRhbGZ1bWllckB3YW5hZG9vLmZyIiwicm9sZSI6ImFkbWluIiwiZmlsZXNfaWQiOiI2Njk2ZTNmN2NkNTRhMDViNTViNzZiY2EiLCJpYXQiOjE3MjE0NTg2ODAsImV4cCI6MTcyMTUxMjY4MH0.LZj00OeDnN7btHMn1DwCIYrnzx1dv13ssSEJ4W802mM
+@user_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibGFzdF9uYW1lIjoiTUFSVElORVoiLCJmaXJzdF9uYW1lIjoiSGVucmkiLCJlbWFpbCI6ImhlbnJpLnRhbGZ1bWllcjFAd2FuYWRvby5mciIsInJvbGUiOiJlZGl0b3IiLCJmaWxlc19pZCI6bnVsbCwiaWF0IjoxNzIxNDg2Njc5LCJleHAiOjE3MjE1NDA2Nzl9.TPcYMxdHtxPlNT8qEW0hGHHXIcCys1Scn740MS0dUUY
 
 ### DATES
 GET http://localhost:8000/api/entities/date
@@ -175,21 +175,20 @@ content-type: application/json
   "pwd":"1234H67£"
 }
 ###
-PATCH http://localhost:8000/api/validate/3
+GET http://localhost:8000/api/entities/user
 x-auth-token:{{admin_token}}
-content-type: application/json
 ###
-PATCH http://localhost:8000/api/profile
+GET http://localhost:8000/api/entities/user/3
+x-auth-token:{{user_token}}
+###
+DELETE http://localhost:8000/api/entities/user/4
+x-auth-token:{{admin_token}}
+###
+PATCH http://localhost:8000/api/entities/user/11
 x-auth-token:{{user_token}}
 content-type: application/json
 
 {
- "email":"henri12@xx.com"
+ "validated":null
 }
-###
-GET http://localhost:8000/api/users
-x-auth-token:{{admin_token}}
-###
-DELETE http://localhost:8000/api/users/4
-x-auth-token:{{admin_token}}
 

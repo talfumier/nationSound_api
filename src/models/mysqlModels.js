@@ -386,7 +386,7 @@ export function validateUser(user, cs = "post") {
     first_name: Joi.string().allow(null),
     email: Joi.string().email(),
     role: Joi.string().valid("admin", "editor"),
-    validated: Joi.date().optional(),
+    validated: Joi.date().allow(null),
     pwd: joiPassword
       .string()
       .min(8)
