@@ -45,6 +45,22 @@ export const FileContainer = mongoose.model(
   "FileContainer",
   FileContainerSchema
 );
+/*TOKENS FOR USER PASSWORD RESET*/
+const TokenSchema = new mongoose.Schema({
+  userId: {
+    type: Number,
+    required: true,
+  },
+  token: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now, //token is automatically deleted after 300s >>> mongosh command : db.tokens.createIndex( { "createdAt": 1 }, { expireAfterSeconds: 300 } )
+  },
+});
+export const Token = mongoose.model("Token", TokenSchema);
 /* USER INPUT VALIDATION */
 export const JoiFileSchema = Joi.object({
   name: Joi.string(),
@@ -80,4 +96,13 @@ export function validateFile(file, cs = "post") {
             },
           };
   }
+}
+export function validateToken(token, cs = "post") {
+  let schema = Joi.object({
+    userId: Joi.number(),
+    token: Joi.string(),
+  });
+  const required = ["userId", "token"];
+  schema = schema.fork(required, (field) => field.required());
+  return schema.validate(token);
 }

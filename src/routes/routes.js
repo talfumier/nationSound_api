@@ -6,6 +6,7 @@ import files from "./files.js";
 import translate from "./google/translate.js";
 import register from "./users/register.js";
 import login from "./users/login.js";
+import password from "./users/password.js";
 
 export function routes(app) {
   app.use(express.json({limit: "10mb"})); //express built-in middleware applies to any route
@@ -28,6 +29,7 @@ export function routes(app) {
 
   app.use("/api/register", register);
   app.use("/api/login", login);
+  app.use("/api/resetpassword", password);
 
   app.use(errorHandler); //custom error handler middleware > function signature : function (err,req,res,next)
   app.use(invalidPathHandler); //invalid path handler middleware > eventually triggerered when none of the routes matches

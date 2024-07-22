@@ -208,6 +208,10 @@ router.patch(
         return res.send(
           new Unauthorized(`'admin' privileges required for user validation !`)
         );
+      if (req.body.role && req.user.role !== "admin")
+        return res.send(
+          new Unauthorized(`'admin' privileges required to change user role !`)
+        );
     }
     await data.update(req.body);
     if (userValidation && req.body.validated)

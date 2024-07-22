@@ -404,6 +404,10 @@ export function validateUser(user, cs = "post") {
       required = ["email", "role", "pwd"];
       schema = schema.fork(required, (field) => field.required());
       return schema.validate(user);
+    case "postForgotPwd":
+      required = ["email"];
+      schema = schema.fork(required, (field) => field.required());
+      return schema.validate(user);
     case "get":
     case "patch":
       const subSchema = joiSubSchema(schema, Object.keys(user));

@@ -3,7 +3,6 @@ import {BadRequest} from "../../models/validation/errors.js";
 import {Image, validateImage} from "../../models/mongoDbModels.js";
 import {validateObjectId} from "../../models/validation/utilityFunctions.js";
 import {routeHandler} from "../../middleware/routeHandler.js";
-import {authHandler} from "../../middleware/authHandler.js";
 import fs from "node:fs";
 
 const router = express.Router();

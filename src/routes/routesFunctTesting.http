@@ -191,4 +191,19 @@ content-type: application/json
 {
  "validated":null
 }
+###
+POST http://localhost:8000/api/resetpassword/forgotPassword
+content-type: application/json
 
+{ 
+  "email":"henri.talfumier@wanadoo.fr",
+  "url":"http://localhost:3000"
+}
+
+###
+PATCH http://localhost:8000/api/resetpassword/forgotPassword/1/348d2a0f7919cfa8be48be6e70deea88a975e4895946cbc53232937478d79258f8b573ea32f5c26fbc900136a0efd77442371236097d283e2945fce27998d02e3bec40628998577e34c97860ef4ffbbb4bc46da52b1117bd6f5601c7f8fb8f9027bf7d6ba099bbb4b696e8a85d5815d87b61153f830c0b713ebc2c7f20e12130b5863f3fa94e6ae6d5d371fa1042c2740b449cb791eb793c43b271cfa4942cc5f37859f62e22f1574e571e61f9a78b7bc0ea89d1d385e52698ccf07f951beac8066c87a37150cd1f50663210a3f06e60bd85b52d3ce10057a9d5613083d3bcdca294736e6d39f540f1b1958fc53a9a08d89df0a5fdc622bf3bc2a1253b5e831f
+content-type: application/json
+
+{
+ "pwd":"1234H67$"
+}
