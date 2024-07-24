@@ -31,7 +31,14 @@ router.get(
     res.send({
       statusCode: "200",
       message: `File container id:${id} successfully retrieved.`,
-      data: container,
+      data: !req.query.main
+        ? container
+        : {
+            _id: id,
+            data: _.filter(container.files, (item) => {
+              return item.main;
+            })[0],
+          },
     });
   })
 );

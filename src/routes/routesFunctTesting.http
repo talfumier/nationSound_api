@@ -66,9 +66,9 @@ GET http://localhost:8000/api/entities/transport
 GET http://localhost:8000/api/entities/transport/29149
 
 ### MESSAGES
-GET http://localhost:8000/api/messages
+GET http://localhost:8000/api/entities/message
 ###
-GET http://localhost:8000/api/messages/28844
+GET http://localhost:8000/api/entities/message/28844
 
 ### PARTNERS
 GET http://localhost:8000/api/entities/partner
@@ -81,6 +81,9 @@ content-type: application/json
 {  
   "files_id":"669445f1cd2eee19bf6f9f73"
 }
+
+### LOGOS
+GET http://localhost:8000/api/entities/logo
   
 ### NEWSLETTERS
 GET http://localhost:8000/api/newsletters
@@ -97,7 +100,7 @@ content-type: application/json
 ### IMAGES
 GET http://localhost:8000/api/files
 ###
-GET http://localhost:8000/api/files/66894a324abffc91307c5418
+GET http://localhost:8000/api/files/6694fdf566d21caaaf525d3a?main=true
 ###
 POST http://localhost:8000/api/files
 content-type: application/json

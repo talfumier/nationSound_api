@@ -68,7 +68,7 @@ export function defineMySqlModels(mySqlConnection) {
   });
   Transport = mySqlConnection.define("transports", {
     id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
-    name: {type: DataTypes.STRING, allowNull: false},
+    title: {type: DataTypes.STRING, allowNull: false},
     transport_mean: {type: DataTypes.STRING, allowNull: false},
     description: {type: DataTypes.STRING, allowNull: false},
   });
