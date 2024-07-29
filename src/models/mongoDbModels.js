@@ -27,10 +27,15 @@ export const FileSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  url: {
+    type: String,
+    required: false,
+    default: null,
+  },
   data: {
     type: String,
-    required: true,
-    default: "",
+    required: false,
+    default: null,
   },
 });
 export const File = mongoose.model("File", FileSchema);
@@ -62,27 +67,29 @@ const TokenSchema = new mongoose.Schema({
 });
 export const Token = mongoose.model("Token", TokenSchema);
 /* USER INPUT VALIDATION */
-export const JoiFileSchema = Joi.object({
-  name: Joi.string(),
-  lastModified: Joi.number(),
-  main: Joi.boolean(),
-  type: Joi.string(),
-  size: Joi.number(),
-  data: Joi.string(),
-});
+// export const JoiFileSchema = Joi.object({
+//   name: Joi.string(),
+//   lastModified: Joi.number(),
+//   main: Joi.boolean(),
+//   type: Joi.string(),
+//   size: Joi.number(),
+//   url: Joi.string(),
+//   data: Joi.string(),
+// });
 export function validateFile(file, cs = "post") {
   let schema = Joi.object({
-    name: Joi.string().optional(),
-    lastModified: Joi.number().optional(),
-    main: Joi.boolean().optional(),
-    type: Joi.string().optional(),
-    size: Joi.number().optional(),
-    data: Joi.string().optional(),
+    name: Joi.string(),
+    lastModified: Joi.number(),
+    main: Joi.boolean(),
+    type: Joi.string(),
+    size: Joi.number(),
+    url: Joi.string().allow(null),
+    data: Joi.string().allow(null, ""),
   });
   let required = [];
   switch (cs) {
     case "post":
-      required = ["name", "lastModified", "main", "type", "size", "data"];
+      required = ["name", "lastModified", "main", "type", "size"];
       schema = schema.fork(required, (field) => field.required());
       return schema.validate(file);
     case "get":

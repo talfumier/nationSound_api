@@ -100,7 +100,7 @@ content-type: application/json
 ### IMAGES
 GET http://localhost:8000/api/files
 ###
-GET http://localhost:8000/api/files/6694fdf566d21caaaf525d3a?main=true
+GET http://localhost:8000/api/files/66a6812b4e7314281c30e346?main=true
 ###
 POST http://localhost:8000/api/files
 content-type: application/json
