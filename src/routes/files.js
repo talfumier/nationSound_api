@@ -44,7 +44,7 @@ router.get(
             _id: id,
             data: _.filter(container.files, (item) => {
               return item.main;
-            })[0].url,
+            })[0][!req.query.map ? "url" : "data"],
           },
     });
   })

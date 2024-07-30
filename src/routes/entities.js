@@ -22,6 +22,8 @@ import {
   Logo,
   User,
   validateUser,
+  validateNewsletter,
+  Newsletter,
 } from "../models/mysqlModels.js";
 import {FileContainer} from "../models/mongoDbModels.js";
 import {BadRequest, Unauthorized} from "../models/validation/errors.js";
@@ -95,8 +97,14 @@ const model = (entity) => {
     case "user":
       return {
         model: User,
-        validate: validateUser, //same validation as partner
+        validate: validateUser,
         master: "last_name",
+      };
+    case "newsletter":
+      return {
+        model: Newsletter,
+        validate: validateNewsletter,
+        master: "email",
       };
   }
 };
