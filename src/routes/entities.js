@@ -150,7 +150,7 @@ router.get(
     if (error) return res.send(new BadRequest(error.details[0].message));
     const data = await mdl.model.findByPk(id);
     if (!data)
-      return res.send(new BadRequest(`Record with id:${id} not found.`));
+      return res.send(new BadRequest(`Entity with id:${id} not found.`));
     if (mdl.model === User) {
       const cond = userIsOwnerOrAdmin(req, data);
       if (!cond[0]) return res.send(cond[1]);
@@ -158,6 +158,30 @@ router.get(
     }
     res.send({
       statusCode: "200",
+      data,
+    });
+  })
+);
+router.post(
+  "/newsletter-subscription", //no authorization required
+  routeHandler(async (req, res) => {
+    const mdl = model("newsletter");
+    const {error} = mdl.validate(req.body, "post");
+    if (error) return res.send(new BadRequest(error.details[0].message));
+    let data = null;
+    data = await mdl.model.findOne({
+      where: {
+        [mdl.master]: req.body[mdl.master],
+      },
+    });
+    if (data)
+      return res.send(
+        new BadRequest(`Entity '${req.body[mdl.master]}' does already exist.`)
+      );
+    data = await mdl.model.create(req.body);
+    res.send({
+      status: "OK",
+      message: `Entity successfully created with id:${data.id}.`,
       data,
     });
   })
@@ -182,14 +206,14 @@ router.post(
       });
       if (data)
         return res.send(
-          new BadRequest(`Record '${req.body[mdl.master]}' does already exist.`)
+          new BadRequest(`Entity '${req.body[mdl.master]}' does already exist.`)
         );
     }
     data = await mdl.model.create(req.body);
     if (mdl.model === User) data.pwd = undefined;
     res.send({
       status: "OK",
-      message: `Record successfully created with id:${data.id}.`,
+      message: `Entity successfully created with id:${data.id}.`,
       data,
     });
   })
@@ -204,7 +228,7 @@ router.patch(
     if (error) return res.send(new BadRequest(error.details[0].message));
     const data = await mdl.model.findByPk(id);
     if (!data)
-      return res.send(new BadRequest(`Record with id:${id} not found.`));
+      return res.send(new BadRequest(`Entity with id:${id} not found.`));
     error = mdl.validate(req.body, "patch").error;
     if (error) return res.send(new BadRequest(error.details[0].message));
     let userValidation = null;
@@ -231,7 +255,7 @@ router.patch(
     if (mdl.model === User) data.pwd = undefined;
     res.send({
       status: "OK",
-      message: `Record successfully updated.`,
+      message: `Entity successfully updated.`,
       data,
     });
   })
@@ -246,7 +270,7 @@ router.delete(
     if (error) return res.send(new BadRequest(error.details[0].message));
     const data = await mdl.model.findByPk(id);
     if (!data)
-      return res.send(new BadRequest(`Record with id:${id} not found.`));
+      return res.send(new BadRequest(`Entity with id:${id} not found.`));
     //check if related records prevent artist or poi deletion
     if (mod === "artist" || mod === "poi") {
       const event = await Event.findOne({
@@ -255,7 +279,7 @@ router.delete(
       if (event)
         return res.send(
           new Unauthorized(
-            `Record id:${id} cannot be deleted due to related records.`
+            `Entity id:${id} cannot be deleted due to related records.`
           )
         );
     }
@@ -276,7 +300,7 @@ router.delete(
     if (mdl.model === User) data.pwd = undefined;
     res.send({
       status: "OK",
-      message: `Record '${id}' and associated files (if any) successfully deleted.`,
+      message: `Entity '${id}' and associated files (if any) successfully deleted.`,
       data,
     });
   })

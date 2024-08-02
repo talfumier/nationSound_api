@@ -1,5 +1,5 @@
 @admin_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibGFzdF9uYW1lIjoiTUFSVElORVoiLCJmaXJzdF9uYW1lIjoiSGVucmkiLCJlbWFpbCI6ImhlbnJpLnRhbGZ1bWllckB3YW5hZG9vLmZyIiwicm9sZSI6ImFkbWluIiwiZmlsZXNfaWQiOiI2Njk2ZTNmN2NkNTRhMDViNTViNzZiY2EiLCJpYXQiOjE3MjE0NTg2ODAsImV4cCI6MTcyMTUxMjY4MH0.LZj00OeDnN7btHMn1DwCIYrnzx1dv13ssSEJ4W802mM
-@user_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibGFzdF9uYW1lIjoiTUFSVElORVoiLCJmaXJzdF9uYW1lIjoiSGVucmkiLCJlbWFpbCI6ImhlbnJpLnRhbGZ1bWllcjFAd2FuYWRvby5mciIsInJvbGUiOiJlZGl0b3IiLCJmaWxlc19pZCI6bnVsbCwiaWF0IjoxNzIxNDg2Njc5LCJleHAiOjE3MjE1NDA2Nzl9.TPcYMxdHtxPlNT8qEW0hGHHXIcCys1Scn740MS0dUUY
+@user_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibGFzdF9uYW1lIjoiTUFSVElORVoiLCJmaXJzdF9uYW1lIjoiSGVucmkiLCJlbWFpbCI6ImhlbnJpLnRhbGZ1bWllckB3YW5hZG9vLmZyIiwicm9sZSI6ImFkbWluIiwiZmlsZXNfaWQiOiI2NmE3ODlmODMxOTY1ZTE1Y2UxOTUzY2MiLCJpYXQiOjE3MjI0MDU2OTEsImV4cCI6MTcyMjQ1OTY5MX0.4-Z_VY0Dz7aiw7C55Lue92t2cbqJqVmIZ6MIQV8yueE
 
 ### DATES
 GET http://localhost:8000/api/entities/date
@@ -86,11 +86,11 @@ content-type: application/json
 GET http://localhost:8000/api/entities/logo
   
 ### NEWSLETTERS
-GET http://localhost:8000/api/newsletters
+GET http://localhost:8000/api/entities/newsletter
 ###
-GET http://localhost:8000/api/newsletters/2948
+GET http://localhost:8000/api/entities/newsletter/29488
 ###
-POST http://localhost:8000/api/newsletters
+POST http://localhost:8000/api/entities/newsletter-subscription
 content-type: application/json
 
 {  
@@ -174,7 +174,7 @@ POST http://localhost:8000/api/login
 content-type: application/json
 
 { 
-  "email":"henri.talfumier1@wanadoo.fr",
+  "email":"henri.talfumier@wanadoo.fr",
   "pwd":"1234H67£"
 }
 ###

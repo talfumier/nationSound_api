@@ -16,7 +16,10 @@ router.post(
         : langdetect.detect(req.body.text)[0].lang,
       to: req.body.to,
     });
-    res.send(text);
+    res.send({
+      statusCode: "200",
+      text,
+    });
   })
 );
 export default router;
