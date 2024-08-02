@@ -22,11 +22,9 @@
   },
   "homepage": "https://github.com/talfumier/nationSound_api#readme",
   "devDependencies": {
-    "@faker-js/faker": "^8.4.1",
     "nodemon": "^3.1.0"
   },
   "dependencies": {
-    "api-query-params": "^5.4.0",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.3.1",
