@@ -62,7 +62,7 @@ mongoose
     console.log("[API]: failed to connect to MongoDB server !", err.message);
   });
 /*DEALING WITH EXPRESS*/
-export const app = express();
+const app = express();
 routes(app); //request pipeline including error handling
 
 const port = process.env.PORT || 8000;
@@ -73,3 +73,4 @@ app.listen(port, () => {
     } server is listening on port ${port} 🚀`
   );
 });
+export default app;
