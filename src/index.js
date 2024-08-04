@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import express from "express";
 import {defineMySqlModels} from "./models/mysqlModels.js";
 import {environment} from "./config/environment.js";
-import {routes} from "../api/index.js";
+import {routes} from "./routes/routes.js";
 
 /*DEALING MITH MYSQL*/
 const mySqlConnection = new Sequelize(
@@ -62,7 +62,7 @@ mongoose
     console.log("[API]: failed to connect to MongoDB server !", err.message);
   });
 /*DEALING WITH EXPRESS*/
-const app = express();
+export const app = express();
 routes(app); //request pipeline including error handling
 
 const port = process.env.PORT || 8000;

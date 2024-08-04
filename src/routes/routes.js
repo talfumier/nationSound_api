@@ -1,12 +1,12 @@
 import express from "express";
-import {errorHandler} from "../src/middleware/errorHandler.js";
-import {invalidPathHandler} from "../src/middleware/invalidPathHandler.js";
-import entities from "../src/routes/entities.js";
-import files from "../src/routes/files.js";
-import translate from "../src/routes/google/translate.js";
-import register from "../src/routes/users/register.js";
-import login from "../src/routes/users/login.js";
-import password from "../src/routes/users/password.js";
+import {errorHandler} from "../middleware/errorHandler.js";
+import {invalidPathHandler} from "../middleware/invalidPathHandler.js";
+import entities from "./entities.js";
+import files from "./files.js";
+import translate from "./google/translate.js";
+import register from "./users/register.js";
+import login from "./users/login.js";
+import password from "./users/password.js";
 export function routes(app) {
   app.use(express.json({limit: "10mb"})); //express built-in middleware applies to any route
   app.use(function (req, res, next) {
