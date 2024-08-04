@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import express from "express";
 import {defineMySqlModels} from "./models/mysqlModels.js";
 import {environment} from "./config/environment.js";
-import {routes} from "./routes/routes.js";
+import {routes} from "../api/index.js";
 
 /*DEALING MITH MYSQL*/
 const mySqlConnection = new Sequelize(
