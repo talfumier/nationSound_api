@@ -73,7 +73,3 @@ app.listen(port, () => {
     } server is listening on port ${port} 🚀`
   );
 });
-/*JOB TO MAINTAIN RENDER SERVER ALIVE >>> GOING IDLE AFTER 10MNS INACTIVITY PERIOD (FREE TIER PLAN)*/
-setInterval(() => {
-  console.log("keep server alive", new Date());
-}, 6e5);
