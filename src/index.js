@@ -73,4 +73,3 @@ app.listen(port, () => {
     } server is listening on port ${port} 🚀`
   );
 });
-export default app;

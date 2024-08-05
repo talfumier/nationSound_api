@@ -7,10 +7,14 @@ import translate from "./google/translate.js";
 import register from "./users/register.js";
 import login from "./users/login.js";
 import password from "./users/password.js";
+import {environment} from "../config/environment.js";
 export function routes(app) {
   app.use(express.json({limit: "10mb"})); //express built-in middleware applies to any route
   app.use(function (req, res, next) {
-    const corsWhitelist = ["http://localhost:3000", "http://localhost:4200"]; // indicate from which authorized domain(s) the request is coming from (CORS)
+    const corsWhitelist = [
+      environment.front_source_url,
+      environment.bo_source_url,
+    ]; // indicate from which authorized domain(s) the request is coming from (CORS)
     const origin = req.headers.origin ? req.headers.origin.toLowerCase() : "";
     if (corsWhitelist.indexOf(origin) > -1) {
       res.header("Access-Control-Allow-Origin", origin);
