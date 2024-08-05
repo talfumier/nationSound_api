@@ -19,7 +19,7 @@ export function routes(app) {
     const origin = req.headers.origin ? req.headers.origin.toLowerCase() : "";
     console.log("xx", origin);
     if (corsWhitelist.indexOf(origin) > -1) {
-      res.header("Access-Control-Allow-Origin", origin);
+      res.header("Access-Control-Allow-Origin", "*");
     }
     res.header(
       "Access-Control-Allow-Methods",
