@@ -1,6 +1,7 @@
 import {Sequelize} from "sequelize";
 import mongoose from "mongoose";
 import express from "express";
+import nodeSchedule from "node-schedule";
 import {defineMySqlModels} from "./models/mysqlModels.js";
 import {environment} from "./config/environment.js";
 import {routes} from "./routes/routes.js";
@@ -73,3 +74,12 @@ app.listen(port, () => {
     } server is listening on port ${port} 🚀`
   );
 });
+/*CRON JOB TO MAINTAIN RENDER SERVER ALIVE >>> GOING IDLE AFTER 10MNS INACTIVITY PERIOD (FREE TIER PLAN)*/
+nodeSchedule.scheduleJob(
+  {
+    second: 600,
+  },
+  () => {
+    console.log("keep server alive");
+  }
+);
