@@ -16,7 +16,6 @@ export function routes(app) {
       environment.front_source_url,
     ]; // indicate from which authorized domain(s) the request is coming from (CORS)
     const origin = req.headers.origin ? req.headers.origin.toLowerCase() : "";
-    console.log("xx", origin, corsWhitelist, corsWhitelist.indexOf(origin));
     if (corsWhitelist.indexOf(origin) > -1) {
       res.header("Access-Control-Allow-Origin", origin);
     }
