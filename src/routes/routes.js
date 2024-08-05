@@ -12,8 +12,8 @@ export function routes(app) {
   app.use(express.json({limit: "10mb"})); //express built-in middleware applies to any route
   app.use(function (req, res, next) {
     const corsWhitelist = [
-      environment.front_source_url,
       environment.bo_source_url,
+      environment.front_source_url,
     ]; // indicate from which authorized domain(s) the request is coming from (CORS)
     const origin = req.headers.origin ? req.headers.origin.toLowerCase() : "";
     if (corsWhitelist.indexOf(origin) > -1) {
