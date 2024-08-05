@@ -23,6 +23,8 @@ const setEnv = () => {
     cloudinary_name: '${process.env.NATIONSOUND_CLOUDINARY_NAME}',
     cloudinary_api_key: '${process.env.NATIONSOUND_CLOUDINARY_APIKEY}',
     cloudinary_api_secret: '${process.env.NATIONSOUND_CLOUDINARY_APISECRET}',
+    front_source_url:'${process.env.NATIONSOUND_FRONT_SOURCE_URL}',
+    bo_source_url:'${process.env.NATIONSOUND_BACK_OFFICE_URL}',
     production: true,
   };`;
   writeFile(targetPath, configFile, (err) => {
