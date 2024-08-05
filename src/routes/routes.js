@@ -12,9 +12,8 @@ export function routes(app) {
   app.use(express.json({limit: "10mb"})); //express built-in middleware applies to any route
   app.use(function (req, res, next) {
     const corsWhitelist = [
-      "http://localhost:3000",
-      "http://localhost:4200",
-      "https://nation-sound-bo.vercel.app",
+      environment.bo_source_url,
+      environment.front_source_url,
     ]; // indicate from which authorized domain(s) the request is coming from (CORS)
     const origin = req.headers.origin ? req.headers.origin.toLowerCase() : "";
     console.log("xx", origin, corsWhitelist, corsWhitelist.indexOf(origin));
