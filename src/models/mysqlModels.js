@@ -139,6 +139,7 @@ export function defineMySqlModels(mySqlConnection) {
     Artist,
     Poi,
     Event,
+    User,
   };
 }
 /* USER INPUT VALIDATION */
