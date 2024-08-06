@@ -4,6 +4,7 @@ import {invalidPathHandler} from "../middleware/invalidPathHandler.js";
 import entities from "./entities.js";
 import files from "./files.js";
 import translate from "./google/translate.js";
+import awake from "./users/awake.js";
 import register from "./users/register.js";
 import login from "./users/login.js";
 import password from "./users/password.js";
@@ -34,6 +35,7 @@ export function routes(app) {
   app.use("/api/files", files);
   app.use("/api/translate", translate);
 
+  app.use("/api/awake", awake);
   app.use("/api/register", register);
   app.use("/api/login", login);
   app.use("/api/resetpassword", password);
