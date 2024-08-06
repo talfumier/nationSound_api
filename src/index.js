@@ -73,13 +73,3 @@ app.listen(port, () => {
     } server is listening on port ${port} 🚀`
   );
 });
-/*KEEPING RENDER SERVER ALIVE DUE TO SHUT-DOWN IN CASE OF INACTIVITY AFTER 10mns (FREE TIER PLAN)*/
-setInterval(async () => {
-  const data = (
-    await User.findAll({
-      attributes: ["last_connection"],
-      order: [["last_connection", "DESC"]],
-    })
-  )[0];
-  console.log("Last user connection: ", data.last_connection);
-}, 6e5);
