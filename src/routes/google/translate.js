@@ -5,6 +5,7 @@ import langdetect from "langdetect";
 import {routeHandler} from "../../middleware/routeHandler.js";
 
 const router = express.Router();
+
 router.post(
   "/", //no authentication required
   routeHandler(async (req, res) => {

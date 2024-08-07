@@ -18,7 +18,7 @@ const mySqlConnection = new Sequelize(
   }
 );
 //define models
-const {Artist, Poi, Event, User} = defineMySqlModels(mySqlConnection); //all SQL models are defined but only 3 need to be returned for relationships + User required to keep server alive
+const {Artist, Poi, Event} = defineMySqlModels(mySqlConnection); //all SQL models are defined but only 3 need to be returned for relationships
 //define relationships
 Artist.hasMany(Event, {foreignKey: "performer"});
 Event.belongsTo(Artist, {foreignKey: "id"});

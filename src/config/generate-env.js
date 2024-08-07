@@ -25,6 +25,8 @@ const setEnv = () => {
     cloudinary_api_secret: '${process.env.NATIONSOUND_CLOUDINARY_APISECRET}',
     front_source_url:'${process.env.NATIONSOUND_FRONT_SOURCE_URL}',
     bo_source_url:'${process.env.NATIONSOUND_BACK_OFFICE_URL}',
+    google_private_key:'${process.env.NATIONSOUND_GOOGLE_PRIVATE_KEY}',
+    google_client_email:'${process.env.NATIONSOUND_GOOGLE_CLIENT_EMAIL}',
     production: true,
   };`;
   writeFile(targetPath, configFile, (err) => {
