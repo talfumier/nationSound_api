@@ -66,16 +66,7 @@ const TokenSchema = new mongoose.Schema({
   },
 });
 export const Token = mongoose.model("Token", TokenSchema);
-/* USER INPUT VALIDATION */
-// export const JoiFileSchema = Joi.object({
-//   name: Joi.string(),
-//   lastModified: Joi.number(),
-//   main: Joi.boolean(),
-//   type: Joi.string(),
-//   size: Joi.number(),
-//   url: Joi.string(),
-//   data: Joi.string(),
-// });
+
 export function validateFile(file, cs = "post") {
   let schema = Joi.object({
     name: Joi.string(),

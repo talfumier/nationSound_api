@@ -213,3 +213,9 @@ content-type: application/json
 {
  "pwd":"1234H67$"
 }
+
+### DATABASE BACK-UP
+GET http://localhost:8000/api/backup/mysql
+###
+
+GET http://localhost:8000/api/backup/mongo
