@@ -1,5 +1,6 @@
 import {google} from "googleapis";
 import fs from "fs";
+import _ from "lodash";
 import {environment} from "../../config/environment.js";
 
 const drive = google.drive("v3");
@@ -14,9 +15,9 @@ const jwtClient = new google.auth.JWT(
 export function uploadFileToDrive(
   filename,
   parent_folder_id,
-  delete_after_upload = true
+  mimeType,
+  callback
 ) {
-  // attempt authorization
   jwtClient.authorize((authErr) => {
     if (authErr) {
       console.log(authErr);
@@ -26,12 +27,10 @@ export function uploadFileToDrive(
         name: filename, //name of the file to be created on google drive
         parents: [parent_folder_id], // id of the parent folder
       };
-      // create data object (from file contents)
       const media = {
-        mimeType: "text/plain",
+        mimeType,
         body: fs.createReadStream(filename),
       };
-      // initate create request
       drive.files.create(
         {
           auth: jwtClient,
@@ -44,16 +43,48 @@ export function uploadFileToDrive(
             console.log(err);
             return;
           }
-          // console.log("File created with ID: ", file.data.id);
-          if (delete_after_upload) {
-            fs.unlink(filename, (err) => {
-              if (err) {
-                console.log(
-                  "An error occurred while deleting the file: " + err
-                );
-              }
-            });
+          console.log("File created with ID: ", file.data.id);
+          callback(file.data.id);
+        }
+      );
+    }
+  });
+}
+export function cleanUpDrive() {
+  jwtClient.authorize((authErr) => {
+    if (authErr) {
+      console.log(authErr);
+      return;
+    } else {
+      drive.files.list(
+        {
+          auth: jwtClient,
+          fields: "files(name, id, createdTime)",
+        },
+        (err, data) => {
+          if (err) {
+            console.log(err);
+            return;
           }
+          const toBedeleted = _.orderBy(
+            _.filter(data.data.files, (item) => {
+              return item.id !== environment.google_backup_folder_id;
+            }),
+            "createdTime",
+            "desc"
+          ).slice(6); //keep last 3 backup of each (mysql and mongo)
+          toBedeleted.map((file) => {
+            drive.files.delete(
+              {auth: jwtClient, fileId: file.id},
+              (err, data) => {
+                if (err) {
+                  console.log(err);
+                  return;
+                }
+                console.log("File " + file.id + "deleted.");
+              }
+            );
+          });
         }
       );
     }
