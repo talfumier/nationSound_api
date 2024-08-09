@@ -16,11 +16,13 @@ export function uploadFileToDrive(
   filename,
   parent_folder_id,
   mimeType,
+  renameTo,
   callback
 ) {
   jwtClient.authorize((authErr) => {
     if (authErr) {
       console.log(authErr);
+      callback(-1);
       return;
     } else {
       const fileMetadata = {
@@ -41,19 +43,37 @@ export function uploadFileToDrive(
         (err, file) => {
           if (err) {
             console.log(err);
+            callback(-1);
             return;
           }
           console.log("File created with ID: ", file.data.id);
+          if (renameTo) {
+            drive.files.update(
+              {
+                auth: jwtClient,
+                fileId: file.data.id,
+                resource: {name: renameTo},
+              },
+              (err, res) => {
+                if (err) {
+                  console.log(err);
+                  callback(-1);
+                  return;
+                }
+              }
+            );
+          }
           callback(file.data.id);
         }
       );
     }
   });
 }
-export function cleanUpDrive() {
+export function cleanUpDrive(callback) {
   jwtClient.authorize((authErr) => {
     if (authErr) {
       console.log(authErr);
+      callback(-1);
       return;
     } else {
       drive.files.list(
@@ -64,6 +84,7 @@ export function cleanUpDrive() {
         (err, data) => {
           if (err) {
             console.log(err);
+            callback(-1);
             return;
           }
           const toBedeleted = _.orderBy(
@@ -79,9 +100,11 @@ export function cleanUpDrive() {
               (err, data) => {
                 if (err) {
                   console.log(err);
+                  callback(-1);
                   return;
                 }
-                console.log("File " + file.id + "deleted.");
+                console.log("File " + file.id + " deleted.");
+                callback(1);
               }
             );
           });
