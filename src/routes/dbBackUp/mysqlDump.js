@@ -2,7 +2,7 @@ import mysqldump from "mysqldump";
 import {rimraf} from "rimraf";
 import {environment} from "../../config/environment.js";
 import {uploadFileToDrive} from "./googleDrive.js";
-export function generateMysqlDump(filename) {
+export function generateMysqlDump(filename, callback) {
   mysqldump({
     connection: {
       host: environment.sql_db_host,
@@ -18,12 +18,15 @@ export function generateMysqlDump(filename) {
         filename,
         environment.google_backup_folder_id,
         "text/plain",
-        () => {
-          rimraf.sync(filename);
+        null,
+        (success) => {
+          rimraf.sync(filename); //remove file
+          callback(success); //success/failure from uploadFileToDrive()
         }
       );
     })
     .catch((err) => {
       console.log("Error in mysqlDump.js ... ", err);
+      callback(-1);
     });
 }
