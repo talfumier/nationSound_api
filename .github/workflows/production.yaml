@@ -4,15 +4,17 @@ on:
   push:
     branches:
       - prod
+
+- name: Setup mongodb-tools
+  run: |
+    wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2204-arm64-100.6.1.deb
+    sudo apt install ./mongodb-database-tools-*-100.6.1.deb
+    
 jobs:
   main:
     name: Deploy to Render
     runs-on: ubuntu-latest
     steps:
-      - name: Setup mongodb-tools
-        run: |
-    wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2204-arm64-100.6.1.deb
-    sudo apt install ./mongodb-database-tools-*-100.6.1.deb
       - name: Trigger deployment
         uses: sws2apps/render-deployment@main #consider using pin for dependabot auto update
         with:
