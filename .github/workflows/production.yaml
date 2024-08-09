@@ -9,10 +9,6 @@ jobs:
     name: Deploy to Render
     runs-on: ubuntu-latest
     steps:
-      - name: Download mongodb-tools
-        run: wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2004-x86_64-100.10.0.deb
-      - name: Install mongodb-tools
-        run: sudo apt install ./mongodb-database-tools-ubuntu2004-x86_64-100.10.0.deb
       - name: Trigger deployment
         uses: sws2apps/render-deployment@main #consider using pin for dependabot auto update
         with:
