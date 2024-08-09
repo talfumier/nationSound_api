@@ -33,7 +33,7 @@ router.get(
       statusCode: "200",
       message: `MongoDB database successfully backed-up on ${date}`,
     };
-    generateMongoDump("mongodump_" + date + ".gz", (success) => {
+    generateMongoDump("mongodump_" + date + ".json", (success) => {
       if (success === -1)
         result = {
           statusCode: 500,
