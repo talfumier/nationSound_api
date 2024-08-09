@@ -7,7 +7,7 @@ on:
 jobs:
   main:
     name: Deploy to Render
-    runs-on: buntu2004-x86_64
+    runs-on: ubuntu2004-x86_64
     steps:
       - name: Downlaod mongodb-tools
         run: wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2004-x86_64-100.10.0.tgz
