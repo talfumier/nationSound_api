@@ -7,7 +7,7 @@ on:
 jobs:
   main:
     name: Deploy to Render
-    runs-on: ubuntu2204-arm64
+    runs-on: ubuntu@latest
     steps:
       - name: Downlaod mongodb-tools
         run: wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2204-arm64-100.10.0.tgz
