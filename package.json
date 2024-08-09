@@ -35,7 +35,6 @@
     "joi-password": "^4.2.0",
     "jsonwebtoken": "^9.0.2",
     "langdetect": "^0.2.1",
-    "mongodb-tools": "^1.0.6",
     "mongoose": "^8.4.1",
     "mysql2": "^3.9.7",
     "mysqldump": "^3.2.0",

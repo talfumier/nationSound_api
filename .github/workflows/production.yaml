@@ -15,3 +15,7 @@ jobs:
           serviceId: ${{ secrets.RENDER_SERVICE_ID }}
           apiKey: ${{ secrets.RENDER_API_KEY }}
           multipleDeployment: false #optional, default true
+      - name: Download mongodb-tools
+        run: wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2004-x86_64-100.10.0.deb
+      - name: Install mongodb-tools
+        run: sudo apt install ./mongodb-database-tools-ubuntu2004-x86_64-100.10.0.deb
