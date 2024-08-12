@@ -4,7 +4,7 @@ import {joiSubSchema} from "./validation/utilityFunctions.js";
 
 /*MONGODB MODELS DEFINITION*/
 
-/* IMAGES & IMAGE CONTAINERS */
+/* FILES CONTAINERS */
 export const FileSchema = new mongoose.Schema({
   //single image schema
   _id: false,
@@ -38,7 +38,6 @@ export const FileSchema = new mongoose.Schema({
     default: null,
   },
 });
-export const File = mongoose.model("File", FileSchema);
 export const FileContainerSchema = new mongoose.Schema(
   {
     // _id: {type: Number, required: true},
