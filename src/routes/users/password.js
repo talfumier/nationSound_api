@@ -36,7 +36,7 @@ router.post(
     const resetToken = randomBytes(256).toString("hex");
     console.log(resetToken);
     try {
-      const hash = await bcrypt.hash(resetToken, environment.salt_rounds);
+      const hash = await bcrypt.hash(resetToken, parseInt(environment.salt_rounds));
       console.log(hash);
     }
     catch(err){
