@@ -22,7 +22,7 @@ router.post(
   routeHandler(async (req, res) => {
     const {error} = validateUser({email: req.body.email}, "postForgotPwd");
     if (error) return res.send(new BadRequest(error.details[0].message));
-    const {url, email} = req.body;
+    const {email} = req.body;
     const user = await User.findOne({
       where: {
         email,
@@ -47,7 +47,9 @@ router.post(
           Veuillez suivre ce lien pour créer un nouveau mot de passe :
         </span>
         <span>
-          <a href=${url}/resetpassword/?id=${user.id}&random=${resetToken}>
+          <a href=${environment.bo_source_url}/resetpassword?id=${
+        user.id
+      }&random=${resetToken}>
             Réinitialisation mot de passe
           </a>
         </span>

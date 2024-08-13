@@ -202,8 +202,15 @@ POST http://localhost:8000/api/resetpassword/forgotPassword
 content-type: application/json
 
 { 
-  "email":"henri.talfumier@wanadoo.fr",
-  "url":"http://localhost:3000"
+  "email":"henri.talfumier@wanadoo.fr"
+}
+
+###
+POST https://nationsound-api.onrender.com/api/resetpassword/forgotPassword
+content-type: application/json
+
+{ 
+  "email":"henri.talfumier@wanadoo.fr"
 }
 
 ###
