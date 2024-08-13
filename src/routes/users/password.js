@@ -1,4 +1,4 @@
-import express from "express";
+urnimport express from "express";
 import bcrypt from "bcrypt";
 import {format} from "date-fns";
 import {Token} from "../../models/mongoDbModels.js";
@@ -35,8 +35,9 @@ router.post(
     const {randomBytes} = await import("node:crypto");
     const resetToken = randomBytes(256).toString("hex");
     console.log(resetToken);
-    const hash = bcrypt.hashSync(resetToken, environment.salt_rounds);
+    const hash = await bcrypt.hash("12346", environment.salt_rounds);
     console.log(hash);
+    return;
     const data = await Token.create({
       userId: user.id,
       token: hash,
