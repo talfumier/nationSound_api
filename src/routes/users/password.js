@@ -36,9 +36,10 @@ router.post(
     const resetToken = randomBytes(256).toString("hex");
     console.log(resetToken);
     const hash = await bcrypt.hash(resetToken, environment.salt_rounds);
+    console.log(hash);
     const data = await Token.create({
       userId: user.id,
-      token: hash,
+      token: hash ? hash : "vvvvvv",
     });
     console.log(data);
     sendBasicEmail(
