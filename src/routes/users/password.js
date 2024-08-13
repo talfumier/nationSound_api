@@ -34,6 +34,7 @@ router.post(
     if (token) await token.deleteOne();
     const {randomBytes} = await import("node:crypto");
     const resetToken = randomBytes(256).toString("hex");
+    console.log(resetToken);
     const hash = await bcrypt.hash(resetToken, environment.salt_rounds);
     const data = await new Token({
       userId: user.id,
