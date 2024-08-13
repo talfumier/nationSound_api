@@ -37,6 +37,7 @@ export const sendBasicEmail = (
       if (callback) callback();
     })
     .catch((error) => {
+      console.log("error in sendBasicEmail", error);
       console.log({success: false, email: recipient, error});
       if (callback) callback(error);
     });
