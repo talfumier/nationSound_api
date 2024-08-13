@@ -34,14 +34,14 @@ router.post(
     if (token) await token.deleteOne();
     const {randomBytes} = await import("node:crypto");
     const resetToken = randomBytes(256).toString("hex");
-    console.log(resetToken);
-    const hash = await bcrypt.hash(resetToken, parseInt(environment.salt_rounds));
-    console.log(hash);
+    const hash = await bcrypt.hash(
+      resetToken,
+      parseInt(environment.salt_rounds)
+    );
     const data = await Token.create({
       userId: user.id,
       token: hash,
     });
-    console.log(data);
     sendBasicEmail(
       user.email,
       "NationSound : mot de passe oublié",
@@ -97,7 +97,10 @@ router.patch(
       return res.send(
         new Unauthorized("Invalid or expired password reset token")
       );
-    user.pwd = await bcrypt.hash(req.body.pwd, environment.salt_rounds);
+    user.pwd = await bcrypt.hash(
+      req.body.pwd,
+      parseInt(environment.salt_rounds)
+    );
     await user.save();
     res.send({
       statusCode: "200",

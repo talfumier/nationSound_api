@@ -35,7 +35,7 @@ router.post(
       );
     user = await User.create({
       ...req.body,
-      pwd: await bcrypt.hash(req.body.pwd, environment.salt_rounds),
+      pwd: await bcrypt.hash(req.body.pwd, parseInt(environment.salt_rounds)),
     });
     user.pwd = undefined; //does not return the password
     sendBasicEmail(
