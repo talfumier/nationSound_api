@@ -35,31 +35,24 @@ router.post(
     const {randomBytes} = await import("node:crypto");
     const resetToken = randomBytes(256).toString("hex");
     console.log(resetToken);
-    bcrypt.hash(
-      resetToken,
-      environment.salt_rounds,
-      async function (err, hash) {
-        if (err)
-          res.send(
-            new InternalServerError(`Unable to hash token in 'password.js.`)
-          );
-        console.log(hash);
-        const data = await Token.create({
-          userId: user.id,
-          token: hash,
-        });
-        console.log(data);
-        sendBasicEmail(
-          user.email,
-          "NationSound : mot de passe oublié",
-          `<div>
+    const hash = await bcrypt.hash(resetToken, environment.salt_rounds);
+    console.log(hash);
+    const data = await Token.create({
+      userId: user.id,
+      token: hash,
+    });
+    console.log(data);
+    sendBasicEmail(
+      user.email,
+      "NationSound : mot de passe oublié",
+      `<div>
         <span>
           Veuillez suivre ce lien pour créer un nouveau mot de passe :
         </span>
         <span>
           <a href=${environment.bo_source_url}/resetpassword?id=${
-            user.id
-          }&random=${resetToken}>
+        user.id
+      }&random=${resetToken}>
             Réinitialisation mot de passe
           </a>
         </span>
@@ -71,20 +64,16 @@ router.post(
           )}.     
         </span>
       </div>`, //plain (i.e. not hashed) resetToken
-          (err) => {
-            if (err)
-              res.send(
-                new InternalServerError(
-                  `Unable to deliver mail to user ${email}.`
-                )
-              );
-            else
-              res.send({
-                statusCode: "200",
-                message: `Email with reset instructions is on its way to ${email}.`,
-              });
-          }
-        );
+      (err) => {
+        if (err)
+          res.send(
+            new InternalServerError(`Unable to deliver mail to user ${email}.`)
+          );
+        else
+          res.send({
+            statusCode: "200",
+            message: `Email with reset instructions is on its way to ${email}.`,
+          });
       }
     );
   })
