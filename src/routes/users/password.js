@@ -36,10 +36,11 @@ router.post(
     const resetToken = randomBytes(256).toString("hex");
     console.log(resetToken);
     const hash = await bcrypt.hash(resetToken, environment.salt_rounds);
-    const data = await new Token({
+    const data = await Token.create({
       userId: user.id,
       token: hash,
-    }).save();
+    });
+    console.log(data);
     sendBasicEmail(
       user.email,
       "NationSound : mot de passe oublié",
