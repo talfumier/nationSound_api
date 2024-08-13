@@ -35,13 +35,8 @@ router.post(
     const {randomBytes} = await import("node:crypto");
     const resetToken = randomBytes(256).toString("hex");
     console.log(resetToken);
-    try {
-      const hash = await bcrypt.hash(resetToken, parseInt(environment.salt_rounds));
-      console.log(hash);
-    }
-    catch(err){
-      console.log(err);
-    }
+    const hash = await bcrypt.hash(resetToken, parseInt(environment.salt_rounds));
+    console.log(hash);
     const data = await Token.create({
       userId: user.id,
       token: hash,
