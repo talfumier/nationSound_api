@@ -31,7 +31,7 @@ router.post(
             role: user.role,
             files_id: user.files_id,
           },
-          environment.sha256,
+          environment.sha256, //signing algorithm secret key kept in an environment variable
           {
             expiresIn: config.token_expires_in,
           }
