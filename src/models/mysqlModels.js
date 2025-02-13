@@ -15,6 +15,7 @@ export let Dates,
   Map,
   Logo,
   User,
+  Ticket,
   connection;
 export function defineMySqlModels(mySqlConnection) {
   Dates = mySqlConnection.define("dates", {
@@ -133,6 +134,13 @@ export function defineMySqlModels(mySqlConnection) {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
     },
+  });
+  Ticket = mySqlConnection.define("ticket", {
+    id: {type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
+    category: {type: DataTypes.STRING, allowNull: false},
+    pass1: {type: DataTypes.INTEGER, allowNull: false},
+    pass2: {type: DataTypes.INTEGER, allowNull: false},
+    pass3: {type: DataTypes.INTEGER, allowNull: false},
   });
   connection = mySqlConnection;
   return {
@@ -416,6 +424,32 @@ export function validateUser(user, cs = "post") {
         : {
             error: {
               details: [{message: "Request body contains invalid fields."}],
+            },
+          };
+  }
+}
+
+export function validateTicket(ticket, cs = "post") {
+  let schema = Joi.object({
+    category: Joi.string(),
+    pass1: Joi.number(),
+    pass2: Joi.number(),
+    pass3: Joi.number(),
+  });
+  let required = [];
+  switch (cs) {
+    case "post":
+      required = ["category", "pass1", "pass2", "pass3"];
+      schema = schema.fork(required, (field) => field.required());
+      return schema.validate(ticket);
+    case "get":
+    case "patch":
+      const subSchema = joiSubSchema(schema, Object.keys(ticket));
+      return subSchema
+        ? subSchema.validate(ticket)
+        : {
+            error: {
+              details: [{ticket: "Request body contains invalid fields."}],
             },
           };
   }
