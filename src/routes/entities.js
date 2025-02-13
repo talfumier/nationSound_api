@@ -22,8 +22,10 @@ import {
   Logo,
   User,
   validateUser,
-  validateNewsletter,
   Newsletter,
+  validateNewsletter,
+  Ticket,
+  validateTicket,
 } from "../models/mysqlModels.js";
 import {FileContainer} from "../models/mongoDbModels.js";
 import {BadRequest, Unauthorized} from "../models/validation/errors.js";
@@ -105,6 +107,12 @@ const model = (entity) => {
         model: Newsletter,
         validate: validateNewsletter,
         master: "email",
+      };
+    case "ticket":
+      return {
+        model: Ticket,
+        validate: validateTicket,
+        master: "category",
       };
   }
 };

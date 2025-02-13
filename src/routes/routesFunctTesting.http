@@ -99,6 +99,11 @@ content-type: application/json
 {  
   "email":"henri.talfumier1@gmail.com"
 }
+  
+### TICKETINGS
+GET http://localhost:8000/api/entities/ticketing
+###
+GET http://localhost:8000/api/entities/ticketing/1
 
 ### IMAGES
 GET http://localhost:8000/api/files
